@@ -1,0 +1,47 @@
+@font-face {
+    font-family: Yekan !important;
+    src: url('../assets/fonts/iran-yekan/iranyekan.woff');
+}
+
+body {
+    font-family: Yekan !important;
+    margin: 0 auto;
+}
+
+a {
+    text-decoration: none !important;
+}
+
+a:hover {
+    text-decoration: none !important;
+}
+
+.layoutBackdropToggle {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 115;
+}
+
+.scrollbar-container {
+    width: 100% !important;
+}
+
+.ps {
+    width: 100% !important;
+}
+
+.chatpageoverlay {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+    z-index: 115;
+}

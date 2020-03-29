@@ -1,0 +1,32 @@
+@font-face {
+    font-family: Yekan;
+    src: url('../../../assets/fonts/iran-yekan/iranyekan.woff2');
+}
+
+*,
+* * {
+    font-family: Yekan !important;
+    /* direction: rtl !important; */
+}
+
+.dataTablee * {
+    direction: rtl !important;
+}
+
+.dataTableAlert {
+    position: absolute;
+    top: -40%;
+    left: 0;
+    width: 100%;
+    height: 0;
+    text-align: center;
+    z-index: 15;
+}
+
+.dataTableAlert p,
+.dataTableAlert h4 {
+    color: #fff;
+    font-size: 18px;
+    text-align: center;
+    padding-bottom: 15px;
+}

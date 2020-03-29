@@ -1,0 +1,194 @@
+/* @import 'react-perfect-scrollbar/dist/css/styles.css'; */
+
+.bellBox {
+    display: none;
+    opacity: 0;
+    position: absolute;
+    top: 58px;
+    left: 50px;
+    flex-direction: column;
+    align-items: center;
+    width: 300px;
+    height: 320px;
+    background-color: #fff;
+    box-shadow: 0px 0.5px 3px rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    z-index: 115;
+    overflow: hidden;
+}
+
+.bellBoxToggle {
+    position: absolute;
+    top: 58px;
+    left: 50px;
+    display: block;
+    opacity: 0;
+    flex-direction: column;
+    align-items: center;
+    width: 300px;
+    height: 320px;
+    background-color: #fff;
+    box-shadow: 0px 0.5px 3px rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    z-index: 115;
+    /* overflow: hidden; */
+}
+
+.bellBoxToggle::before {
+    content: "";
+    position: absolute;
+    top: -7px;
+    left: 19px;
+    bottom: 0;
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid #fff;
+}
+
+.bellBoxHeader {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 52px;
+    padding: 0 20px;
+}
+
+.bellBoxHeaderSeen {
+    background-color: transparent !important;
+    border: none !important;
+    outline: none;
+    color: #767272;
+    font-size: 12px;
+}
+
+.bellBoxHeaderTitle {
+    color: #404040;
+    font-size: 16px;
+}
+
+.bellBoxLine {
+    position: absolute;
+    top: 54px;
+    right: 0;
+    width: 100%;
+    height: 1px;
+    background-color: #e4e7ea;
+}
+
+.bellBoxBody {
+    position: absolute;
+    top: 60px;
+    right: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 250px;
+    overflow: hidden;
+}
+
+.scrollbar-container {
+    width: 100% !important;
+}
+
+.ps {
+    width: 100% !important;
+}
+
+.bellBoxBodyContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100% !important;
+}
+
+.bellBoxBodyNotification {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    width: 90%;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.bellBoxBodyNotificationDesc {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    width: 100%;
+    margin-right: 10px;
+}
+
+.bellBoxBodyNotificationDescTitle {
+    text-align: right;
+    color: #404040;
+    font-size: 12px;
+    word-wrap: break-word;
+}
+
+.bellBoxBodyNotificationDescDate {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    margin-top: -10px;
+}
+
+.bellBoxbodyNotificationDescDateText {
+    color: #404040;
+    font-size: 10px;
+    cursor: pointer;
+}
+
+.bellBoxBodyNotificationDescDateIcon {
+    color: #1961ac;
+    font-size: 9px;
+    margin-top: -10px;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.BellBoxBodyNotificationImage {
+    width: 40px;
+    border-radius: 100%;
+}
+
+.bellBoxNotificationUnderlineBox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.bellBoxNotificationUnderline {
+    width: 90%;
+    height: 1px;
+    background-color: #e4e7ea;
+}
+
+@media screen and ( max-width: 500px) {
+    .bellBox {
+        width: 240px;
+    }
+    /* .bellBoxToggle {
+        left: 12px;
+    } */
+}
+
+@media screen and ( max-width: 400px) {
+    .bellBoxToggle {
+        left: 12px;
+    }
+    .bellBoxToggle::before {
+        left: 57px;
+    }
+}

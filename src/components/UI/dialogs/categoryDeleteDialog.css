@@ -1,0 +1,11 @@
+@media screen and (max-width: 992px) {
+    .MuiDialog-paper {
+        margin-right: 0 !important;
+    }
+}
+
+@media screen and (min-width: 992px) {
+    .MuiDialog-paper {
+        margin-right: 270px !important;
+    }
+}
