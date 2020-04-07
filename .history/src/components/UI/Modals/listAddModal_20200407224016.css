@@ -1,0 +1,63 @@
+@font-face {
+    font-family: Yekan;
+    src: url('../../../assets/fonts/iran-yekan/iranyekan.woff2');
+}
+
+.MuiFormControlLabel-label {
+    margin-right: 30px !important;
+    font-family: Yekan !important;
+    font-size: 15px !important;
+}
+
+#outlined-secondary {
+    direction: rtl !important;
+    font-family: Yekan !important;
+}
+
+.MuiInputBase-root,
+.MuiOutlinedInput-root,
+.MuiInputBase-colorSecondary,
+.MuiOutlinedInput-colorSecondary,
+.MuiInputBase-fullWidth,
+.MuiInputBase-formControl {
+    direction: rtl !important;
+}
+
+.MuiPaper-root,
+.MuiMenu-paper,
+.MuiPopover-paper,
+.MuiPaper-elevation8,
+.MuiPaper-rounded {
+    direction: rtl !important;
+}
+
+.MuiOutlinedInput-colorSecondary.Mui-focused .MuiOutlinedInput-notchedOutline {
+    border-color: #1961ac !important;
+}
+
+.MuiFormLabel-colorSecondary.Mui-focused {
+    color: #1961ac !important;
+}
+
+.MuiOutlinedInput-input {
+    padding: 10.5px 14px !important;
+}
+
+.MuiFormLabel-root {
+    top: -8px !important;
+    font-family: Yekan !important;
+    font-size: 14px !important;
+}
+
+.MuiInputLabel-root {
+    top: -8px !important;
+    font-family: Yekan !important;
+}
+
+.MuiFormControlLabel-root {
+    margin-left: 0 !important;
+}
+
+.MuiFormControlLabel-label {
+    margin-right: 15px !important;
+}

@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus, faEllipsisV, faCloudDownloadAlt } from '@fortawesome/free-solid-svg-icons'
 
 
-const PanelMainPostEdithead = (props) => {
+const PanelMainPostEditehead = (props) => {
 
     const useStylesBootstrap = makeStyles(theme => ({
         arrow: {
@@ -81,4 +81,4 @@ const PanelMainPostEdithead = (props) => {
 }
 
 
-export default PanelMainPostEdithead
+export default PanelMainPostEditehead;
