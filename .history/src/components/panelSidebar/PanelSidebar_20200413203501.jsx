@@ -181,7 +181,7 @@ class PanelSidebar extends Component {
                     {/* <PerfectScrollbar> */}
                         {
                             this.state.itemsInSidebar.map(item => (
-                                // <div>
+                                <>
                                 <div key={item.id} className={this.state.activeLineBefore === item.id ?
                                     [classes.layoutSidebarBodyTop1Box, classes.layoutSidebarBodyClicked].join(' ') :
                                     classes.layoutSidebarBodyTop1Box
@@ -261,7 +261,7 @@ class PanelSidebar extends Component {
                                         // </Ripples>
                                     }
                                 </div>
-                                // </div>
+                                </>
                             ))
                         }
                         {/* </PerfectScrollbar> */}

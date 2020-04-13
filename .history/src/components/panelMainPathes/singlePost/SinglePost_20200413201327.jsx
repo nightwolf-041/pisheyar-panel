@@ -28,6 +28,10 @@ const styles = theme => ({
         flexBasis: '33.33%',
         flexShrink: 0,
       },
+      secondaryHeading: {
+        fontSize: theme.typography.pxToRem(15),
+        color: theme.palette.text.secondary,
+      },
       justifier: {
         justifyContent: 'center'
       }
@@ -57,6 +61,8 @@ class SinglePost extends React.Component {
 
 
     componentDidMount(){
+
+        console.log(this.props.history.state);
         
         if(this.props.history.state !== 'showSinglepost' || this.props.postGuid === null) {
             this.props.history.replace('/postsList')
@@ -126,9 +132,9 @@ class SinglePost extends React.Component {
                         <Typography className={classes.heading}>عکس پست</Typography>
                         </ExpansionPanelSummary>
                         <ExpansionPanelDetails className={classes.justifier}>
-                            <div className="expanded-panelimage-keeper">
-                                <img src={post.documentPath} />
-                            </div>
+                           {/* <div className="expanded-panelimage-keeper"> */}
+                            <img src="https://ae01.alicdn.com/kf/HTB1NfbEehSYBuNjSsphq6zGvVXap/5x7FT-Jail-Mugshot-Height-Chart-Scales-Pattern-Custom-Photo-Studio-Background-Backdrop-Vinyl-150cm-x-220cm.jpg" />
+                           {/* </div> */}
                         </ExpansionPanelDetails>
                     </ExpansionPanel>
                     <ExpansionPanel expanded={this.state.expanded === 'panel2'} onChange={this.handleChange('panel2')}>
@@ -140,9 +146,7 @@ class SinglePost extends React.Component {
                         <Typography className={classes.heading}>عنوان</Typography>
                         </ExpansionPanelSummary>
                         <ExpansionPanelDetails>
-                            <Typography>
-                                {post.postTitle}
-                            </Typography>
+                            {post.postTitle}
                         </ExpansionPanelDetails>
                     </ExpansionPanel>
                     <ExpansionPanel expanded={this.state.expanded === 'panel3'} onChange={this.handleChange('panel3')}>
@@ -154,9 +158,7 @@ class SinglePost extends React.Component {
                         <Typography className={classes.heading}>توضیح مختصر</Typography>
                         </ExpansionPanelSummary>
                         <ExpansionPanelDetails>
-                            <Typography>
-                                {post.postAbstract}
-                            </Typography>
+                            {post.postAbstract}
                         </ExpansionPanelDetails>
                     </ExpansionPanel>
                     <ExpansionPanel expanded={this.state.expanded === 'panel4'} onChange={this.handleChange('panel4')}>

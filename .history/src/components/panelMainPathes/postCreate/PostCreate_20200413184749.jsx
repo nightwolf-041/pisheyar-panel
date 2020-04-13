@@ -572,7 +572,7 @@ class PostCreate extends Component {
 
   sendDataHandler = () => {
 
-    // let docGuid = this.state.documentGuid
+    let docGuid = this.state.documentGuid
     let postImage = this.state.files
 
     let titleValue = this.state.title

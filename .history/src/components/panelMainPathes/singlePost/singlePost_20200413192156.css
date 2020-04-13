@@ -1,0 +1,23 @@
+.MuiExpansionPanel-root {
+    direction: rtl !important;
+}
+
+
+/* 
+.Mui-expanded {
+    background-color: rgb(238, 238, 238) !important;
+} */
+
+hr {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.Mui-expanded {
+    background-color: rgb(238, 238, 238) !important;
+}
+
+
+/* .MuiExpansionPanel-rounded {
+    background-color: rgb(238, 238, 238) !important;
+} */

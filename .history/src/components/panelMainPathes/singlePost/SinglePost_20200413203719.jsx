@@ -126,9 +126,7 @@ class SinglePost extends React.Component {
                         <Typography className={classes.heading}>عکس پست</Typography>
                         </ExpansionPanelSummary>
                         <ExpansionPanelDetails className={classes.justifier}>
-                            <div className="expanded-panelimage-keeper">
-                                <img src={post.documentPath} />
-                            </div>
+                            <img src={post.documentPath} />
                         </ExpansionPanelDetails>
                     </ExpansionPanel>
                     <ExpansionPanel expanded={this.state.expanded === 'panel2'} onChange={this.handleChange('panel2')}>

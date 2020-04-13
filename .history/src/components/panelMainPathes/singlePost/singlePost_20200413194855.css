@@ -1,0 +1,36 @@
+.MuiExpansionPanel-root {
+    direction: rtl !important;
+}
+
+
+/* 
+.Mui-expanded {
+    background-color: rgb(238, 238, 238) !important;
+} */
+
+hr {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.Mui-expanded {
+    background-color: rgb(238, 238, 238) !important;
+}
+
+.MuiExpansionPanel-rounded {
+    background-color: #fff !important;
+}
+
+.expanded-panelimage-keeper {
+    width: 100%;
+    height: 300px;
+    display: flex;
+    justify-content: center !important;
+    align-items: center !important;
+}
+
+.expanded-panelimage-keeper img {
+    width: 300px;
+    height: auto;
+    max-width: 300px !important;
+}

@@ -15,23 +15,23 @@ import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import 'react-toastify/dist/ReactToastify.css';
-import './singlePost.css'
 
+import classes from './singlePost.module.css'
 
-const styles = theme => ({
+const styles = makeStyles((theme) => ({
     root: {
-        width: '100%',
-        direction: 'rtl'
-      },
-      heading: {
-        fontSize: theme.typography.pxToRem(15),
-        flexBasis: '33.33%',
-        flexShrink: 0,
-      },
-      justifier: {
-        justifyContent: 'center'
-      }
-  });
+      width: '100%',
+    },
+    heading: {
+      fontSize: theme.typography.pxToRem(15),
+      flexBasis: '33.33%',
+      flexShrink: 0,
+    },
+    secondaryHeading: {
+      fontSize: theme.typography.pxToRem(15),
+      color: theme.palette.text.secondary,
+    },
+  }));
 
 
 class SinglePost extends React.Component {
@@ -55,8 +55,16 @@ class SinglePost extends React.Component {
 
     errorOnCatch = () => toast('خطای شبکه', {type: toast.TYPE.ERROR});
 
+    // componentWillUnmount(prevState, nextState) {
+    //     if(prevState !== nextState) {
+    //         return
+    //     }
+    // }
+
 
     componentDidMount(){
+
+        console.log(this.props.history.state);
         
         if(this.props.history.state !== 'showSinglepost' || this.props.postGuid === null) {
             this.props.history.replace('/postsList')
@@ -68,8 +76,6 @@ class SinglePost extends React.Component {
             axiosConfig.get(`/Post/GetByGuid/${guid}`, {
                 headers: { Authorization: "Bearer " + this.props.token }
             }).then(res => {
-
-                console.log(res.data.post);
                 
                 this.setState({
                     loading: false,
@@ -102,8 +108,59 @@ class SinglePost extends React.Component {
 
         const {classes} = this.props;
 
+        // return (
+        //     <PanelMain header={<PanelMainSinglePosthead postTitle={post.postTitle}/>}>
+        //          {
+        //           this.state.loading && !this.state.errorOnLoadData ?
+        //           <div className="d-flex justify-content-center">
+        //             <div className="spinner-border d-block mr-2" role="status">
+        //               <span className="sr-only">Loading...</span>
+        //             </div>
+        //             <strong className="d-block">در حال بارگیری</strong>
+        //           </div>
+                   
+        //           : null
+        //         }
+
+        //         {this.state.errorOnLoadData ?
+        //         <h5 className="text-center text-warning">
+        //             خطایی در بارگیری رخ داده است
+        //         </h5>
+        //         :
+
+        //         <div className={classes.postCard}>
+        //             {/* <div className={classes.postCardTitle}>
+        //                 {
+        //                 <div dangerouslySetInnerHTML={{ __html: post.postTitle }} />
+        //                 }
+        //             </div> */}
+        //             <div className={classes.postCardAbstrack}>
+        //                 {
+        //                 <div dangerouslySetInnerHTML={{ __html: post.postAbstract }} />
+        //                 }
+        //             </div>
+        //             <hr />
+        //             <div className={classes.postCardDesc}>
+        //                 {
+        //                 <div dangerouslySetInnerHTML={{ __html: post.postDescription }} />
+        //                 }
+        //             </div>
+        //         </div>
+        //         }
+
+        //         <ToastContainer autoClose={4000}
+        //             position={toast.POSITION.BOTTOM_LEFT}
+        //             hideProgressBar={false}
+        //             closeOnClick={true}
+        //             pauseOnVisibilityChange={false}
+        //             pauseOnHover={false}
+        //             rtl={true} />
+
+        //     </PanelMain>
+        // )
+
         return (
-            <PanelMain header={<PanelMainSinglePosthead postTitle="نمایش پست"/>}>
+            <PanelMain header={<PanelMainSinglePosthead postTitle={post.postTitle}/>}>
                  {
                   this.state.loading && !this.state.errorOnLoadData ?
                   <div className="d-flex justify-content-center">
@@ -116,6 +173,12 @@ class SinglePost extends React.Component {
                   : null
                 }
 
+                {this.state.errorOnLoadData ?
+                <h5 className="text-center text-warning">
+                    خطایی در بارگیری رخ داده است
+                </h5>
+                :
+
                 <div className={classes.root}>
                     <ExpansionPanel expanded={this.state.expanded === 'panel1'} onChange={this.handleChange('panel1')}>
                         <ExpansionPanelSummary
@@ -123,12 +186,14 @@ class SinglePost extends React.Component {
                         aria-controls="panel1bh-content"
                         id="panel1bh-header"
                         >
-                        <Typography className={classes.heading}>عکس پست</Typography>
+                        <Typography className={classes.heading}>General settings</Typography>
+                        <Typography className={classes.secondaryHeading}>I am an expansion panel</Typography>
                         </ExpansionPanelSummary>
-                        <ExpansionPanelDetails className={classes.justifier}>
-                            <div className="expanded-panelimage-keeper">
-                                <img src={post.documentPath} />
-                            </div>
+                        <ExpansionPanelDetails>
+                        <Typography>
+                            Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat. Aliquam eget
+                            maximus est, id dignissim quam.
+                        </Typography>
                         </ExpansionPanelDetails>
                     </ExpansionPanel>
                     <ExpansionPanel expanded={this.state.expanded === 'panel2'} onChange={this.handleChange('panel2')}>
@@ -137,12 +202,16 @@ class SinglePost extends React.Component {
                         aria-controls="panel2bh-content"
                         id="panel2bh-header"
                         >
-                        <Typography className={classes.heading}>عنوان</Typography>
+                        <Typography className={classes.heading}>Users</Typography>
+                        <Typography className={classes.secondaryHeading}>
+                            You are currently not an owner
+                        </Typography>
                         </ExpansionPanelSummary>
                         <ExpansionPanelDetails>
-                            <Typography>
-                                {post.postTitle}
-                            </Typography>
+                        <Typography>
+                            Donec placerat, lectus sed mattis semper, neque lectus feugiat lectus, varius pulvinar
+                            diam eros in elit. Pellentesque convallis laoreet laoreet.
+                        </Typography>
                         </ExpansionPanelDetails>
                     </ExpansionPanel>
                     <ExpansionPanel expanded={this.state.expanded === 'panel3'} onChange={this.handleChange('panel3')}>
@@ -151,12 +220,16 @@ class SinglePost extends React.Component {
                         aria-controls="panel3bh-content"
                         id="panel3bh-header"
                         >
-                        <Typography className={classes.heading}>توضیح مختصر</Typography>
+                        <Typography className={classes.heading}>Advanced settings</Typography>
+                        <Typography className={classes.secondaryHeading}>
+                            Filtering has been entirely disabled for whole web server
+                        </Typography>
                         </ExpansionPanelSummary>
                         <ExpansionPanelDetails>
-                            <Typography>
-                                {post.postAbstract}
-                            </Typography>
+                        <Typography>
+                            Nunc vitae orci ultricies, auctor nunc in, volutpat nisl. Integer sit amet egestas eros,
+                            vitae egestas augue. Duis vel est augue.
+                        </Typography>
                         </ExpansionPanelDetails>
                     </ExpansionPanel>
                     <ExpansionPanel expanded={this.state.expanded === 'panel4'} onChange={this.handleChange('panel4')}>
@@ -165,13 +238,17 @@ class SinglePost extends React.Component {
                         aria-controls="panel4bh-content"
                         id="panel4bh-header"
                         >
-                        <Typography className={classes.heading}>محتوا</Typography>
+                        <Typography className={classes.heading}>Personal data</Typography>
                         </ExpansionPanelSummary>
                         <ExpansionPanelDetails>
-                            <div dangerouslySetInnerHTML={{ __html: post.postDescription }} />
+                        <Typography>
+                            Nunc vitae orci ultricies, auctor nunc in, volutpat nisl. Integer sit amet egestas eros,
+                            vitae egestas augue. Duis vel est augue.
+                        </Typography>
                         </ExpansionPanelDetails>
                     </ExpansionPanel>
                     </div>
+                }
 
                 <ToastContainer autoClose={4000}
                     position={toast.POSITION.BOTTOM_LEFT}

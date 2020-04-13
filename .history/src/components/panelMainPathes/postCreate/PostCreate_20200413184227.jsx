@@ -456,7 +456,7 @@ class PostCreate extends Component {
   }
 
   handleInit() {
-    // console.log('FilePond instance has initialised', this.pond);
+    console.log('FilePond instance has initialised', this.pond);
 }
 
   errorOnSending = () => toast(this.state.errorMsg, {type: toast.TYPE.ERROR});
@@ -509,6 +509,7 @@ class PostCreate extends Component {
     axiosConfig.get('/Category/GetAllNames', {
       headers: { Authorization: "Bearer " + this.props.token }
     }).then(res => {
+      console.log(res.data.categories);
       this.setState({
         categoriesNames: res.data.categories,
         loadingCategoriesNames: false
@@ -552,6 +553,7 @@ class PostCreate extends Component {
   }
 
   categoriesNamesAutoChangeHanlder =(event, value) => {
+    console.log(value);
 
     for (var obj in this.state.categoriesNames) {
 
@@ -565,6 +567,7 @@ class PostCreate extends Component {
       }
     }
     let finalValue = value.split(' ')
+    console.log(finalValue);
 
     // this.state.categoriesNames.map(ctg => value === ctg.title ? value = ctg.guid : value = value)
     this.setState({selectedCategoryName: finalValue})
@@ -572,7 +575,7 @@ class PostCreate extends Component {
 
   sendDataHandler = () => {
 
-    // let docGuid = this.state.documentGuid
+    let docGuid = this.state.documentGuid
     let postImage = this.state.files
 
     let titleValue = this.state.title
@@ -593,7 +596,7 @@ class PostCreate extends Component {
     })
 
     axiosConfig.post('/Post/Create', {
-      documentGuid: this.state.documentGuid.replace(/['"]+/g, ''),
+      documentGuid: 'docGuid',
       title: titleValue,
       abstract: abstractValue,
       description: descriptionValue,
@@ -728,21 +731,37 @@ class PostCreate extends Component {
           checkValidity={true}
           // instantUpload={false}
           maxFiles={1}
+          // server="http://185.94.97.164/api/CKEditor/UploadImageTest"
           server = {{
             url: 'http://185.94.97.164/api/Uploader',
             process: '/FilepondProcess',
+            // revert: '/RevertImage',
             revert: {
               url: '/FilepondRevert',
               method: 'POST'
             }
+            
+            // restore: './restore.php?id=',
+            // fetch: './fetch.php?data='
           }}
+          // server={{
+          //   url: 'http://185.94.97.164/',
+          //   process: './api/CKEditor/UploadImage'
+          // }}
           oninit={() => this.handleInit() }
+
+          // onremovefile={(error, file) => console.log(file)}
           onprocessfile={(error, file) => this.setState({documentGuid: file.serverId})}
+          // onprocessfilerevert={(file) => console.log(file)}
+
           onupdatefiles={(fileItems) => {
               this.setState({
                   files: fileItems.map(fileItem => fileItem.file)
               });
           }}
+          // onaddfilestart={(file) => console.log(file)}
+          // onaddfileprogress={(file, progress) => console.log(file)}
+          // onremovefile={() => this.handleRemoveFile()}
           labelIdle="عکس را اینجا رها یا کلیک کنید"
           labelInvalidField="فایل معنبر نیست"
           labelFileProcessing="درحال بارگذاری"
@@ -1075,6 +1094,11 @@ class PostCreate extends Component {
     );
   }
 }
+
+const topDefTags = [
+  { title: 'ورزشی', year: 1994 },
+  { title: 'خبری', year: 1972 },
+]
 
 
 const mapState = state => {

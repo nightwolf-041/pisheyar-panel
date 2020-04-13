@@ -181,11 +181,12 @@ class PanelSidebar extends Component {
                     {/* <PerfectScrollbar> */}
                         {
                             this.state.itemsInSidebar.map(item => (
-                                // <div>
+                                <>
                                 <div key={item.id} className={this.state.activeLineBefore === item.id ?
                                     [classes.layoutSidebarBodyTop1Box, classes.layoutSidebarBodyClicked].join(' ') :
                                     classes.layoutSidebarBodyTop1Box
-                                }>
+                                }
+                                    >
 
                                     {
                                         item.linksInDrop ?
@@ -216,7 +217,7 @@ class PanelSidebar extends Component {
                                                      pathesMatch ?
                                                      classes.dashboardOrangeLineToggle :
                                                      classes.dashboardOrangeLine}></div>
-                                                </div>
+                                                </>
                                             </div>
                                             </Ripples>
                                             <div ref={this.dashDropRef} className={!this.state.dropdownToggleClass ? classes.layoutSidebarBodyTop1Drop : classes.layoutSidebarBodyTop1DropToggle}>
@@ -261,7 +262,7 @@ class PanelSidebar extends Component {
                                         // </Ripples>
                                     }
                                 </div>
-                                // </div>
+                                </>
                             ))
                         }
                         {/* </PerfectScrollbar> */}

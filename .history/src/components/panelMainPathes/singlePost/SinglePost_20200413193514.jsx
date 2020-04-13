@@ -17,6 +17,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import 'react-toastify/dist/ReactToastify.css';
 import './singlePost.css'
 
+// import classes from './singlePost.module.css'
 
 const styles = theme => ({
     root: {
@@ -28,9 +29,10 @@ const styles = theme => ({
         flexBasis: '33.33%',
         flexShrink: 0,
       },
-      justifier: {
-        justifyContent: 'center'
-      }
+      secondaryHeading: {
+        fontSize: theme.typography.pxToRem(15),
+        color: theme.palette.text.secondary,
+      },
   });
 
 
@@ -55,8 +57,16 @@ class SinglePost extends React.Component {
 
     errorOnCatch = () => toast('خطای شبکه', {type: toast.TYPE.ERROR});
 
+    // componentWillUnmount(prevState, nextState) {
+    //     if(prevState !== nextState) {
+    //         return
+    //     }
+    // }
+
 
     componentDidMount(){
+
+        console.log(this.props.history.state);
         
         if(this.props.history.state !== 'showSinglepost' || this.props.postGuid === null) {
             this.props.history.replace('/postsList')
@@ -68,8 +78,6 @@ class SinglePost extends React.Component {
             axiosConfig.get(`/Post/GetByGuid/${guid}`, {
                 headers: { Authorization: "Bearer " + this.props.token }
             }).then(res => {
-
-                console.log(res.data.post);
                 
                 this.setState({
                     loading: false,
@@ -102,8 +110,59 @@ class SinglePost extends React.Component {
 
         const {classes} = this.props;
 
+        // return (
+        //     <PanelMain header={<PanelMainSinglePosthead postTitle={post.postTitle}/>}>
+        //          {
+        //           this.state.loading && !this.state.errorOnLoadData ?
+        //           <div className="d-flex justify-content-center">
+        //             <div className="spinner-border d-block mr-2" role="status">
+        //               <span className="sr-only">Loading...</span>
+        //             </div>
+        //             <strong className="d-block">در حال بارگیری</strong>
+        //           </div>
+                   
+        //           : null
+        //         }
+
+        //         {this.state.errorOnLoadData ?
+        //         <h5 className="text-center text-warning">
+        //             خطایی در بارگیری رخ داده است
+        //         </h5>
+        //         :
+
+        //         <div className={classes.postCard}>
+        //             {/* <div className={classes.postCardTitle}>
+        //                 {
+        //                 <div dangerouslySetInnerHTML={{ __html: post.postTitle }} />
+        //                 }
+        //             </div> */}
+        //             <div className={classes.postCardAbstrack}>
+        //                 {
+        //                 <div dangerouslySetInnerHTML={{ __html: post.postAbstract }} />
+        //                 }
+        //             </div>
+        //             <hr />
+        //             <div className={classes.postCardDesc}>
+        //                 {
+        //                 <div dangerouslySetInnerHTML={{ __html: post.postDescription }} />
+        //                 }
+        //             </div>
+        //         </div>
+        //         }
+
+        //         <ToastContainer autoClose={4000}
+        //             position={toast.POSITION.BOTTOM_LEFT}
+        //             hideProgressBar={false}
+        //             closeOnClick={true}
+        //             pauseOnVisibilityChange={false}
+        //             pauseOnHover={false}
+        //             rtl={true} />
+
+        //     </PanelMain>
+        // )
+
         return (
-            <PanelMain header={<PanelMainSinglePosthead postTitle="نمایش پست"/>}>
+            <PanelMain header={<PanelMainSinglePosthead postTitle={post.postTitle}/>}>
                  {
                   this.state.loading && !this.state.errorOnLoadData ?
                   <div className="d-flex justify-content-center">
@@ -116,6 +175,12 @@ class SinglePost extends React.Component {
                   : null
                 }
 
+                {this.state.errorOnLoadData ?
+                <h5 className="text-center text-warning">
+                    خطایی در بارگیری رخ داده است
+                </h5>
+                :
+
                 <div className={classes.root}>
                     <ExpansionPanel expanded={this.state.expanded === 'panel1'} onChange={this.handleChange('panel1')}>
                         <ExpansionPanelSummary
@@ -125,10 +190,10 @@ class SinglePost extends React.Component {
                         >
                         <Typography className={classes.heading}>عکس پست</Typography>
                         </ExpansionPanelSummary>
-                        <ExpansionPanelDetails className={classes.justifier}>
-                            <div className="expanded-panelimage-keeper">
-                                <img src={post.documentPath} />
-                            </div>
+                        <ExpansionPanelDetails>
+                        <Typography>
+                           <img src="https://lh3.googleusercontent.com/proxy/AXlPzzTxsW_xHN_iYEJ_XVNZ_GmlzMTwCDDIa-pQbbu5_ZLgRFde2hbcIjtL89Fpy-mM_yAIu1vtLSMPB-UHtCD15IOpXwpfqm0wg4Xz1ngCRw7dcr0" />
+                        </Typography>
                         </ExpansionPanelDetails>
                     </ExpansionPanel>
                     <ExpansionPanel expanded={this.state.expanded === 'panel2'} onChange={this.handleChange('panel2')}>
@@ -140,9 +205,7 @@ class SinglePost extends React.Component {
                         <Typography className={classes.heading}>عنوان</Typography>
                         </ExpansionPanelSummary>
                         <ExpansionPanelDetails>
-                            <Typography>
-                                {post.postTitle}
-                            </Typography>
+                            {post.postTitle}
                         </ExpansionPanelDetails>
                     </ExpansionPanel>
                     <ExpansionPanel expanded={this.state.expanded === 'panel3'} onChange={this.handleChange('panel3')}>
@@ -154,9 +217,7 @@ class SinglePost extends React.Component {
                         <Typography className={classes.heading}>توضیح مختصر</Typography>
                         </ExpansionPanelSummary>
                         <ExpansionPanelDetails>
-                            <Typography>
-                                {post.postAbstract}
-                            </Typography>
+                            {post.postAbstract}
                         </ExpansionPanelDetails>
                     </ExpansionPanel>
                     <ExpansionPanel expanded={this.state.expanded === 'panel4'} onChange={this.handleChange('panel4')}>
@@ -172,6 +233,7 @@ class SinglePost extends React.Component {
                         </ExpansionPanelDetails>
                     </ExpansionPanel>
                     </div>
+                }
 
                 <ToastContainer autoClose={4000}
                     position={toast.POSITION.BOTTOM_LEFT}

@@ -181,17 +181,18 @@ class PanelSidebar extends Component {
                     {/* <PerfectScrollbar> */}
                         {
                             this.state.itemsInSidebar.map(item => (
-                                // <div>
+                                <>
                                 <div key={item.id} className={this.state.activeLineBefore === item.id ?
                                     [classes.layoutSidebarBodyTop1Box, classes.layoutSidebarBodyClicked].join(' ') :
                                     classes.layoutSidebarBodyTop1Box
-                                }>
+                                }
+                                    >
 
                                     {
                                         item.linksInDrop ?
-                                            <>
+                                            <div key={item.id}>
                                             <Ripples>
-                                            <div key={item.id} className={
+                                            <div className={
                                                 this.state.activeLineBefore !== item.id &&
                                                 !pathesMatch ?
                                                 [classes.layoutSidebarBodyTop1, classes.toggleBack].join(' ') :
@@ -234,7 +235,7 @@ class PanelSidebar extends Component {
                                                 }
 
                                             </div>
-                                            </>
+                                            </div>
 
                                         : 
                                         // <Ripples>
@@ -261,7 +262,7 @@ class PanelSidebar extends Component {
                                         // </Ripples>
                                     }
                                 </div>
-                                // </div>
+                                </>
                             ))
                         }
                         {/* </PerfectScrollbar> */}

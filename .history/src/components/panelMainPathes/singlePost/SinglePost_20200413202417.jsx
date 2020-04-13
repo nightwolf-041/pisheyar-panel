@@ -57,6 +57,8 @@ class SinglePost extends React.Component {
 
 
     componentDidMount(){
+
+        console.log(this.props.history.state);
         
         if(this.props.history.state !== 'showSinglepost' || this.props.postGuid === null) {
             this.props.history.replace('/postsList')
@@ -126,9 +128,7 @@ class SinglePost extends React.Component {
                         <Typography className={classes.heading}>عکس پست</Typography>
                         </ExpansionPanelSummary>
                         <ExpansionPanelDetails className={classes.justifier}>
-                            <div className="expanded-panelimage-keeper">
-                                <img src={post.documentPath} />
-                            </div>
+                            <img src="https://ae01.alicdn.com/kf/HTB1NfbEehSYBuNjSsphq6zGvVXap/5x7FT-Jail-Mugshot-Height-Chart-Scales-Pattern-Custom-Photo-Studio-Background-Backdrop-Vinyl-150cm-x-220cm.jpg" />
                         </ExpansionPanelDetails>
                     </ExpansionPanel>
                     <ExpansionPanel expanded={this.state.expanded === 'panel2'} onChange={this.handleChange('panel2')}>

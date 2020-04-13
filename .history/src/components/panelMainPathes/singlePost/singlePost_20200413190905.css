@@ -1,0 +1,11 @@
+.MuiExpansionPanel-root {
+    direction: rtl !important;
+}
+
+.Mui-expanded {
+    background-color: #ccc !important;
+}
+
+.MuiExpansionPanel-rounded {
+    background-color: rgb(165, 163, 163) !important;
+}

@@ -181,17 +181,18 @@ class PanelSidebar extends Component {
                     {/* <PerfectScrollbar> */}
                         {
                             this.state.itemsInSidebar.map(item => (
-                                // <div>
+                                <>
                                 <div key={item.id} className={this.state.activeLineBefore === item.id ?
                                     [classes.layoutSidebarBodyTop1Box, classes.layoutSidebarBodyClicked].join(' ') :
                                     classes.layoutSidebarBodyTop1Box
-                                }>
+                                }
+                                    >
 
                                     {
                                         item.linksInDrop ?
                                             <>
-                                            <Ripples>
-                                            <div key={item.id} className={
+                                            {/* <Ripples> */}
+                                            <div className={
                                                 this.state.activeLineBefore !== item.id &&
                                                 !pathesMatch ?
                                                 [classes.layoutSidebarBodyTop1, classes.toggleBack].join(' ') :
@@ -218,7 +219,7 @@ class PanelSidebar extends Component {
                                                      classes.dashboardOrangeLine}></div>
                                                 </div>
                                             </div>
-                                            </Ripples>
+                                            {/* </Ripples> */}
                                             <div ref={this.dashDropRef} className={!this.state.dropdownToggleClass ? classes.layoutSidebarBodyTop1Drop : classes.layoutSidebarBodyTop1DropToggle}>
                                                 {
                                                     item.linksInDrop.map(link => (
@@ -261,7 +262,7 @@ class PanelSidebar extends Component {
                                         // </Ripples>
                                     }
                                 </div>
-                                // </div>
+                                </>
                             ))
                         }
                         {/* </PerfectScrollbar> */}
