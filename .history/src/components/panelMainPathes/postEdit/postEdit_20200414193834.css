@@ -1,0 +1,184 @@
+/* @font-face {
+    font-family: Yekan;
+    src: url('../../../assets/fonts/iran-yekan/iranyekan.woff2');
+}
+
+*,
+* * {
+    font-family: Yekan !important;
+}
+
+.font-size-dropdown {
+    display: inline-block;
+}
+
+.font-size-menu {
+    display: inline-block;
+    position: absolute;
+    top: 3px;
+    background: #FFFFFF;
+    box-shadow: 0 0 2px;
+    max-height: 150px;
+    overflow-y: scroll;
+}
+
+.font-size-menu::-webkit-scrollbar {
+    display: none
+}
+
+.font-size-option {
+    padding: 3px;
+}
+
+.font-size-option:hover {
+    background: #F0F0F0;
+    cursor: pointer;
+}
+
+.RichEditor-controls {
+    margin: 5px 10px !important;
+}
+
+.RichEditor-styleButton {
+    width: auto !important;
+    background-color: #be5858 !important;
+    color: #fff !important;
+    border: none !important;
+    margin: 2px;
+    padding: 2px 2px;
+    cursor: pointer !important;
+}
+
+.editors {
+    direction: rtl !important;
+    height: auto !important;
+    padding: 15px !important;
+}
+
+.public-DraftStyleDefault-block,
+.public-DraftStyleDefault-ltr {
+    direction: rtl !important;
+}
+
+.preloader {
+    position: absolute;
+    top: 10px;
+    left: 0;
+    z-index: 50;
+    font-size: 20px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.preloader p {
+    color: #fff;
+    padding: 15px;
+    background-color: #336291;
+    text-align: center;
+}
+
+.top-input {
+    margin: 20px 0 !important;
+    direction: rtl;
+}
+
+.tox,
+.tox-tinymce {
+    margin: 30px 45px !important;
+}
+
+.tiny-send-button {
+    margin: 20px 0;
+} */
+
+.ck-content {
+    min-height: 80px !important;
+}
+
+.myEditeditor-keeper-minimize {
+    margin-top: 30px !important;
+    width: 95%;
+    height: auto;
+    margin: 0 auto;
+}
+
+.myEditeditor-keeper-maximize {
+    width: 100%;
+    height: 100vh;
+    margin: 0px 0px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background-color: #ccc;
+}
+
+.myeditor-keeper-icons {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    padding-right: 5px;
+    background-color: #fff;
+}
+
+.myeditor-keeper-icon {
+    cursor: pointer;
+}
+
+.myeditor-keeper-icon-ml {
+    cursor: pointer;
+    margin-left: 15px;
+}
+
+.ck.ck-editor__main>.ck-editor__editable.ck-rounded-corners {
+    border-radius: none !important;
+}
+
+.inputsDir {
+    direction: rtl !important;
+}
+
+.sendDataButton {
+    background-color: #4CAF50;
+}
+
+.sendDataButton:hover {
+    background-color: #388E3C;
+}
+
+
+/* .filepond--root {
+    max-height: 400px;
+} */
+
+.filepond--drop-label {
+    background-color: #f1f0ef !important;
+}
+
+.filepond--file-poster-wrapper {
+    width: 300px;
+    height: 400px !important;
+    max-height: auto !important;
+    overflow: hidden;
+    margin: 0 auto 7px auto !important;
+}
+
+.filepond--file-poster {
+    width: 100%;
+    height: 400px !important;
+    max-height: 400px !important;
+}
+
+.filepond-keeper-box {
+    width: 100%;
+    max-height: 420px;
+    overflow: hidden;
+    margin-bottom: 45px;
+}
