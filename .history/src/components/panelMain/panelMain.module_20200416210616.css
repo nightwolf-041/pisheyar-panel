@@ -1,0 +1,241 @@
+.mainSectionPathesSection {
+    position: absolute;
+    top: 87px;
+    left: 1%;
+    width: 98%;
+    height: auto;
+    /* height: calc(100vh - 170px); */
+    /* direction: rtl; */
+    text-align: right;
+    margin-bottom: 10px;
+    background-color: #fff;
+    border-radius: 4px;
+    padding: 15px;
+    box-sizing: border-box !important;
+    -webkit-box-sizing: border-box !important;
+    overflow: hidden;
+}
+
+.mainSection {
+    position: relative;
+    top: 70px;
+    left: 0;
+    background-color: #ccc;
+    width: calc(100% - 250px);
+    height: calc(100vh - 70px);
+    overflow: hidden;
+    /* padding-bottom: 10px; */
+    /* z-index: 1; */
+    /* background-color: #4d4f53; */
+}
+
+.layoutMainOverlay {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    z-index: 4;
+}
+
+.layoutMainOverlayToggle {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    z-index: 4;
+}
+
+.mainSectionHeader {
+    position: absolute;
+    top: 14px;
+    left: 1%;
+    width: 98%;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+    overflow: hidden;
+    background-color: #fff;
+    border-radius: 4px;
+    padding: 0 15px 0 15px;
+}
+
+.mainSectionHeaderDescs {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    width: auto;
+    padding: 7px 0;
+}
+
+.mainSectionHeaderTitle {
+    color: #1d1d1d;
+    text-align: right;
+    padding-top: 23px;
+}
+
+.mainSectionHeaderSubtitle {
+    color: #3b3a3a;
+    font-size: 12px;
+    text-align: right;
+    margin-top: -8px;
+}
+
+.mainSectionHeaderIcons {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: center;
+    width: auto;
+    z-index: 5;
+}
+
+.mainSectionHeaderIcon {
+    cursor: pointer;
+    margin-right: 15px;
+    z-index: 5;
+}
+
+.mainSectionHeaderIconSingle {
+    cursor: pointer;
+    z-index: 5;
+}
+
+.mainSectionHeaderDropdown {
+    opacity: 0;
+    display: none;
+    position: absolute;
+    top: 60px;
+    left: 25px;
+    width: auto;
+    height: auto;
+    background-color: #fff;
+    border-radius: 3px;
+    flex-direction: column;
+    align-items: flex-end;
+    padding: 10px 15px 0 15px;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.4);
+    z-index: 10;
+}
+
+.mainSectionHeaderDropdownToggle {
+    opacity: 1;
+    /* display: block; */
+    position: absolute;
+    top: 60px;
+    left: 25px;
+    width: auto;
+    height: auto;
+    background-color: #fff;
+    border-radius: 3px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    padding: 10px 15px 0 15px;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.4);
+    z-index: 10;
+}
+
+.mainSectionHeaderDropdownItem,
+.mainSectionHeaderDropdown2 {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 7px !important;
+}
+
+.mainSectionHeaderDropdownItemIcon,
+.mainSectionHeaderDropdown2Icon {
+    color: #252525;
+    font-size: 12px;
+    margin-left: 7px;
+    /* margin-top: -12px; */
+}
+
+.mainSectionHeaderDropdownItemText,
+.mainSectionHeaderDropdown2Text {
+    background-color: transparent !important;
+    border: none !important;
+    outline: none;
+    color: #252525;
+    font-size: 13px;
+}
+
+.mainSectionBody {
+    position: absolute;
+    top: 87px;
+    left: 1%;
+    width: 98%;
+    height: auto;
+    direction: rtl;
+    text-align: right;
+    margin-bottom: 10px;
+    background-color: #fff;
+    border-radius: 4px;
+    padding: 15px;
+    overflow: hidden;
+}
+
+
+/* loading  */
+
+.mainSectionLoader {
+    display: none;
+    color: #1961ac;
+    font-size: 90px;
+    text-indent: -9999em;
+    overflow: hidden;
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+    margin: 72px auto;
+    position: absolute;
+    top: 72px;
+    left: calc(50% - 35px);
+    -webkit-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-animation: load6 1.7s infinite ease, round 1.7s infinite ease;
+    animation: load6 1.7s infinite ease, round 1.7s infinite ease;
+    background-color: none;
+    z-index: 50;
+}
+
+.mainSectionBlueLogoSpinner {
+    display: none;
+    width: 90px;
+    position: absolute;
+    top: 170px;
+    left: calc(50% - 45px);
+    z-index: 50;
+}
+
+.mainSectionSpinnerBackdrop {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: #fff;
+    z-index: 40;
+}
+
+@media screen and ( max-width: 992px) {
+    .mainSection {
+        position: relative;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        height: calc(100vh - 70px);
+        overflow: hidden;
+    }
+}
