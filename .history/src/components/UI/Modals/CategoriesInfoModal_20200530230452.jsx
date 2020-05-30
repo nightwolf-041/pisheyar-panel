@@ -220,31 +220,29 @@ const styles = makeStyles(theme => ({
 }));
 
 function CategoriesInfoModal(props) {
-  
-  const [info, setInfo] = React.useState(null);
+  ForCover
+ForActiveIcon
+
+
 
   const [documentGuidForCover, setDocumentGuidForCover] = React.useState('');
   const [documentGuidForActiveIcon, setDocumentGuidForActiveIcon] = React.useState('');
   const [documentGuidForInActive, setDocumentGuidForInActive] = React.useState('');
   const [documentGuidForQuadMenu, setDocumentGuidForQuadMenu] = React.useState('');
-  const [fileForCover, setFileForCover] = React.useState([]);
-  const [fileForActiveIcon, setFileForActiveIcon] = React.useState([]);
-  const [fileForInActive, setFileForInActive] = React.useState([]);
-  const [fileForQuadMenu, setFileForQuadMenu] = React.useState([]);
+  const [filesForCover, setFileForCover] = React.useState([]);
+  const [files2, setFile2] = React.useState([]);
+  const [files3, setFile3] = React.useState([]);
+  const [files4, setFile4] = React.useState([]);
   
-  const [infoBoxAbstract, setInfoBoxAbstract] = React.useState('');
   const [infoBoxDescription, setInfoBoxDescription] = React.useState('');
-
   const [loadingInfoBoxTags, setloadingInfoBoxTags] = React.useState(true);
-  const [infoBoxTags, setInfoBoxTags] = React.useState([]);
+  const [postInfoBoxTags, setPostInfoBoxTags] = React.useState([]);
   const [infoBoxTrimedValues, setInfoBoxTrimedValues] = React.useState();
   const [infoBoxReplacedValues, setInfoBoxReplacedValues] = React.useState();
 
   const [defaultInfoloading, setDefaultInfoloading] = React.useState(false);
   const [post, setPost] = React.useState({});
   const [fakeAutoOptions, setFakeAutoOptions] = React.useState(['']);
-
-  const [categoriesSetDetailsLoading, setCategoriesSetDetailsLoading] = React.useState(false);
 
 
 
@@ -254,18 +252,15 @@ function CategoriesInfoModal(props) {
   let pond4 = React.useRef()
 
   React.useEffect(() => {
-    console.log(props.infoData);
-    setInfo(props.infoData)
-
     axiosConfig.get('/Tag/GetAll', {
       headers: { Authorization: "Bearer " + props.token }
     }).then(res => {
       setloadingInfoBoxTags(false)
-      setInfoBoxTags(res.data.tags)
+      setPostInfoBoxTags(res.data.tags)
     }).catch(err => {
       toast('خطا در بارگیری تگ های دسته بندی', {type: toast.TYPE.ERROR});
       setloadingInfoBoxTags(false)
-      setInfoBoxTags([])
+      setPostInfoBoxTags([])
     })
   }, [props])
 
@@ -295,8 +290,13 @@ function CategoriesInfoModal(props) {
 
   }
 
-  const infoBoxAbstractInputHandler = e => {
-    setInfoBoxAbstract(e.target.value)
+  const infoBoxDescInputHandler = e => {
+    let oldPost = {...this.state.post}
+    let oldPostTitle = oldPost.postTitle
+    oldPostTitle = e.target.value
+    oldPost.postTitle = oldPostTitle
+
+    setPost(oldPost)
   }
 
   const classes = styles();
@@ -353,30 +353,6 @@ function CategoriesInfoModal(props) {
 
 ];
 
-const categoriesSetDetailsHandler = () => {
-  setCategoriesSetDetailsLoading(true)
-
-  axiosConfig.post('/Category/SetDetails', {
-    categoryGuid: info.node.categoryGuid,
-    abstract: infoBoxAbstract,
-    description: infoBoxDescription,
-    coverDocumentGuid: documentGuidForCover,
-    activeIconDocumentGuid: documentGuidForActiveIcon,
-    inactiveIconDocumentGuid: documentGuidForInActive,
-    quadMenuDocumentGuid: documentGuidForQuadMenu,
-    tags: infoBoxReplacedValues
-  }, {
-    headers: { Authorization: "Bearer " + props.token }
-  }).then(res => {
-    console.log(res);
-    setCategoriesSetDetailsLoading(false)
-    props.hideInfoModal()
-    toast('عملیات موفقیت آمیز بود', {type: toast.TYPE.SUCCESS});
-  }).catch(err => {
-    toast('خطای شبکه', {type: toast.TYPE.ERROR});
-  })
-}
-
 
   return (
     <>
@@ -401,11 +377,11 @@ const categoriesSetDetailsHandler = () => {
             <Divider id="transition-modal-divider" className={classes.marginBottom}/>
 
               <div className="infoBoxFilepondLabel">
-                 کاور دسته بندی
+                عکس برای پروفایل اول
               </div>
 
               <FilePond ref={ref => pond = ref}
-                files={fileForCover}
+                files={files}
                 allowMultiple={false}
                 maxFiles={1}
                 checkValidity={true}
@@ -465,11 +441,11 @@ const categoriesSetDetailsHandler = () => {
               </FilePond>
 
               <div className="infoBoxFilepondLabel">
-                آیکون فعال دسته بندی
+                عکس برای پروفایل دوم
               </div>
 
               <FilePond ref={ref => pond2 = ref}
-                files={fileForActiveIcon}
+                files={files2}
                 allowMultiple={false}
                 maxFiles={1}
                 checkValidity={true}
@@ -529,11 +505,11 @@ const categoriesSetDetailsHandler = () => {
               </FilePond>
 
               <div className="infoBoxFilepondLabel">
-                آیکون غیر فعال دسته بندی
+                عکس برای پروفایل سوم
               </div>
 
               <FilePond ref={ref => pond3 = ref}
-                files={fileForInActive}
+                files={files3}
                 allowMultiple={false}
                 maxFiles={1}
                 checkValidity={true}
@@ -593,11 +569,11 @@ const categoriesSetDetailsHandler = () => {
               </FilePond>
 
               <div className="infoBoxFilepondLabel">
-                عکس منوی غلطکی
+                عکس برای پروفایل چهارم
               </div>
 
               <FilePond ref={ref => pond4 = ref}
-                files={fileForQuadMenu}
+                files={files4}
                 allowMultiple={false}
                 maxFiles={1}
                 checkValidity={true}
@@ -662,11 +638,11 @@ const categoriesSetDetailsHandler = () => {
                 <TextField
                 label="توضیح مختصر"
                 className={[classes.inputs, "inputsDir", classes.titleMarginTop].join(' ')}
-                id="InfoBoxAbstract"
+                id="InfoBoxDesc"
                 // size="small"
                 defaultValue={post.postTitle}
                 variant="outlined"
-                onChange={(e) => infoBoxAbstractInputHandler(e)}
+                onChange={(e) => infoBoxDescInputHandler(e)}
                 />
               : 
               <Autocomplete
@@ -897,7 +873,7 @@ const categoriesSetDetailsHandler = () => {
               loading={loadingInfoBoxTags}
               loadingText="درحال بارگیری"
               noOptionsText="موردی یافت نشد"
-              options={infoBoxTags.map((option) => option.name)}
+              options={postInfoBoxTags.map((option) => option.name)}
               freeSolo
               onChange={(event, values) => {
                 autoCompleteChangeHandler(event, values)
@@ -943,12 +919,12 @@ const categoriesSetDetailsHandler = () => {
                     variant="contained"
                     color="primary"
                     className={classes.buttonSuccess}
-                    disabled={props.categoriesSetDetailsLoading}
-                    onClick={() => categoriesSetDetailsHandler()}
+                    disabled={props.buttonLoading}
+                    // onClick={() => props.handleButtonClick(nameInputValue, orderInputValue)}
                     >
                     ارسال
                 </Button>
-                {categoriesSetDetailsLoading && <CircularProgress size={24} className={classes.buttonProgress} />}
+                {props.buttonLoading && <CircularProgress size={24} className={classes.buttonProgress} />}
             </div>
             {/* </PerfectScrollbar> */}
 

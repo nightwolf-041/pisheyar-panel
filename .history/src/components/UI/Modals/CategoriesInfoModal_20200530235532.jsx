@@ -355,7 +355,7 @@ function CategoriesInfoModal(props) {
 
 const categoriesSetDetailsHandler = () => {
   setCategoriesSetDetailsLoading(true)
-
+console.log(info.node.categoryGuid);
   axiosConfig.post('/Category/SetDetails', {
     categoryGuid: info.node.categoryGuid,
     abstract: infoBoxAbstract,

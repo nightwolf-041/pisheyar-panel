@@ -215,14 +215,10 @@ class Categories extends React.Component {
   }
 
   showInfoModal = (info) => {
-    alert(info);
     this.setState({
-      infoModalData: info
-    }, () => {
-      this.setState({
       openInfoModal: true,
       errorOnInfo: false,
-      })
+      infoModalData: info
     })
   }
   closeInfoModal = () => {

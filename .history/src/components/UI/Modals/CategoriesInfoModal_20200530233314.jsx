@@ -220,8 +220,7 @@ const styles = makeStyles(theme => ({
 }));
 
 function CategoriesInfoModal(props) {
-  
-  const [info, setInfo] = React.useState(null);
+  console.log(props.infoData);
 
   const [documentGuidForCover, setDocumentGuidForCover] = React.useState('');
   const [documentGuidForActiveIcon, setDocumentGuidForActiveIcon] = React.useState('');
@@ -236,7 +235,7 @@ function CategoriesInfoModal(props) {
   const [infoBoxDescription, setInfoBoxDescription] = React.useState('');
 
   const [loadingInfoBoxTags, setloadingInfoBoxTags] = React.useState(true);
-  const [infoBoxTags, setInfoBoxTags] = React.useState([]);
+  const [InfoBoxTags, setInfoBoxTags] = React.useState([]);
   const [infoBoxTrimedValues, setInfoBoxTrimedValues] = React.useState();
   const [infoBoxReplacedValues, setInfoBoxReplacedValues] = React.useState();
 
@@ -254,9 +253,6 @@ function CategoriesInfoModal(props) {
   let pond4 = React.useRef()
 
   React.useEffect(() => {
-    console.log(props.infoData);
-    setInfo(props.infoData)
-
     axiosConfig.get('/Tag/GetAll', {
       headers: { Authorization: "Bearer " + props.token }
     }).then(res => {
@@ -296,7 +292,7 @@ function CategoriesInfoModal(props) {
   }
 
   const infoBoxAbstractInputHandler = e => {
-    setInfoBoxAbstract(e.target.value)
+    setInfoBoxAbstract(oldPost)
   }
 
   const classes = styles();
@@ -357,23 +353,23 @@ const categoriesSetDetailsHandler = () => {
   setCategoriesSetDetailsLoading(true)
 
   axiosConfig.post('/Category/SetDetails', {
-    categoryGuid: info.node.categoryGuid,
-    abstract: infoBoxAbstract,
-    description: infoBoxDescription,
-    coverDocumentGuid: documentGuidForCover,
-    activeIconDocumentGuid: documentGuidForActiveIcon,
-    inactiveIconDocumentGuid: documentGuidForInActive,
-    quadMenuDocumentGuid: documentGuidForQuadMenu,
-    tags: infoBoxReplacedValues
+    categoryGuid: props.infoData.categoryGuid,
+    abstract: "string",
+    description: 'string',
+    coverDocumentGuid: 'string',
+    activeIconDocumentGuid: 'string',
+    inactiveIconDocumentGuid: 'string',
+    quadMenuDocumentGuid: 'string',
+    tags: [
+      "string"
+    ]
   }, {
-    headers: { Authorization: "Bearer " + props.token }
+    headers: { Authorization: "Bearer " + this.props.token }
   }).then(res => {
     console.log(res);
     setCategoriesSetDetailsLoading(false)
     props.hideInfoModal()
-    toast('عملیات موفقیت آمیز بود', {type: toast.TYPE.SUCCESS});
-  }).catch(err => {
-    toast('خطای شبکه', {type: toast.TYPE.ERROR});
+    toast('عملیات موفقیت آمیز بود', {type: toast.TYPE.ERROR});
   })
 }
 

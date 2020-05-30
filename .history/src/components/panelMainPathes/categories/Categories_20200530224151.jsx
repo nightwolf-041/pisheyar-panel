@@ -141,7 +141,6 @@ class Categories extends React.Component {
       openInfoModal: false,
       InfobuttonLoading: false,
       errorOnInfo: false,
-      infoModalData: [],
 
       openDialog: false,
       delButtonLoading: false
@@ -215,14 +214,9 @@ class Categories extends React.Component {
   }
 
   showInfoModal = (info) => {
-    alert(info);
     this.setState({
-      infoModalData: info
-    }, () => {
-      this.setState({
       openInfoModal: true,
-      errorOnInfo: false,
-      })
+      errorOnInfo: false
     })
   }
   closeInfoModal = () => {
@@ -505,7 +499,6 @@ class Categories extends React.Component {
             hideInfoModal={this.closeInfoModal}
             buttonLoading={this.state.InfobuttonLoading}
             errorOnInfo={this.state.errorOnInfo}
-            infoData={this.state.infoModalData}
             // handleButtonClick={(nodeName, nodeOrder) => this.createNodeHandler(nodeName, nodeOrder)}
             />
 

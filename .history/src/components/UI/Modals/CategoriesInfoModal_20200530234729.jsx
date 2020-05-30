@@ -221,7 +221,6 @@ const styles = makeStyles(theme => ({
 
 function CategoriesInfoModal(props) {
   
-  const [info, setInfo] = React.useState(null);
 
   const [documentGuidForCover, setDocumentGuidForCover] = React.useState('');
   const [documentGuidForActiveIcon, setDocumentGuidForActiveIcon] = React.useState('');
@@ -255,8 +254,7 @@ function CategoriesInfoModal(props) {
 
   React.useEffect(() => {
     console.log(props.infoData);
-    setInfo(props.infoData)
-
+    
     axiosConfig.get('/Tag/GetAll', {
       headers: { Authorization: "Bearer " + props.token }
     }).then(res => {
@@ -357,7 +355,7 @@ const categoriesSetDetailsHandler = () => {
   setCategoriesSetDetailsLoading(true)
 
   axiosConfig.post('/Category/SetDetails', {
-    categoryGuid: info.node.categoryGuid,
+    categoryGuid: props.infoData.categoryGuid,
     abstract: infoBoxAbstract,
     description: infoBoxDescription,
     coverDocumentGuid: documentGuidForCover,

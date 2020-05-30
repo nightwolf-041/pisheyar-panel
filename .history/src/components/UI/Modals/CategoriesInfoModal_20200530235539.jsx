@@ -355,26 +355,26 @@ function CategoriesInfoModal(props) {
 
 const categoriesSetDetailsHandler = () => {
   setCategoriesSetDetailsLoading(true)
-
-  axiosConfig.post('/Category/SetDetails', {
-    categoryGuid: info.node.categoryGuid,
-    abstract: infoBoxAbstract,
-    description: infoBoxDescription,
-    coverDocumentGuid: documentGuidForCover,
-    activeIconDocumentGuid: documentGuidForActiveIcon,
-    inactiveIconDocumentGuid: documentGuidForInActive,
-    quadMenuDocumentGuid: documentGuidForQuadMenu,
-    tags: infoBoxReplacedValues
-  }, {
-    headers: { Authorization: "Bearer " + props.token }
-  }).then(res => {
-    console.log(res);
-    setCategoriesSetDetailsLoading(false)
-    props.hideInfoModal()
-    toast('عملیات موفقیت آمیز بود', {type: toast.TYPE.SUCCESS});
-  }).catch(err => {
-    toast('خطای شبکه', {type: toast.TYPE.ERROR});
-  })
+console.log(info.node.categoryGuid);
+  // axiosConfig.post('/Category/SetDetails', {
+  //   categoryGuid: info.node.categoryGuid,
+  //   abstract: infoBoxAbstract,
+  //   description: infoBoxDescription,
+  //   coverDocumentGuid: documentGuidForCover,
+  //   activeIconDocumentGuid: documentGuidForActiveIcon,
+  //   inactiveIconDocumentGuid: documentGuidForInActive,
+  //   quadMenuDocumentGuid: documentGuidForQuadMenu,
+  //   tags: infoBoxReplacedValues
+  // }, {
+  //   headers: { Authorization: "Bearer " + props.token }
+  // }).then(res => {
+  //   console.log(res);
+  //   setCategoriesSetDetailsLoading(false)
+  //   props.hideInfoModal()
+  //   toast('عملیات موفقیت آمیز بود', {type: toast.TYPE.SUCCESS});
+  // }).catch(err => {
+  //   toast('خطای شبکه', {type: toast.TYPE.ERROR});
+  // })
 }
 
 

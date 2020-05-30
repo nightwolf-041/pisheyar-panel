@@ -284,14 +284,14 @@
 
 @media screen and (max-width: 768px) {
     .categorie-search-and-child-keeper {
-        width: 100%;
+        width: 70%;
         margin-left: auto;
     }
 }
 
 @media screen and (max-width: 650px) {
     .categorie-search-and-child-keeper {
-        width: 100%;
+        width: 80%;
         margin-left: auto;
     }
 }

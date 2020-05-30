@@ -220,8 +220,7 @@ const styles = makeStyles(theme => ({
 }));
 
 function CategoriesInfoModal(props) {
-  
-  const [info, setInfo] = React.useState(null);
+  console.log(props.infoData);
 
   const [documentGuidForCover, setDocumentGuidForCover] = React.useState('');
   const [documentGuidForActiveIcon, setDocumentGuidForActiveIcon] = React.useState('');
@@ -232,11 +231,9 @@ function CategoriesInfoModal(props) {
   const [fileForInActive, setFileForInActive] = React.useState([]);
   const [fileForQuadMenu, setFileForQuadMenu] = React.useState([]);
   
-  const [infoBoxAbstract, setInfoBoxAbstract] = React.useState('');
   const [infoBoxDescription, setInfoBoxDescription] = React.useState('');
-
   const [loadingInfoBoxTags, setloadingInfoBoxTags] = React.useState(true);
-  const [infoBoxTags, setInfoBoxTags] = React.useState([]);
+  const [postInfoBoxTags, setPostInfoBoxTags] = React.useState([]);
   const [infoBoxTrimedValues, setInfoBoxTrimedValues] = React.useState();
   const [infoBoxReplacedValues, setInfoBoxReplacedValues] = React.useState();
 
@@ -254,18 +251,15 @@ function CategoriesInfoModal(props) {
   let pond4 = React.useRef()
 
   React.useEffect(() => {
-    console.log(props.infoData);
-    setInfo(props.infoData)
-
     axiosConfig.get('/Tag/GetAll', {
       headers: { Authorization: "Bearer " + props.token }
     }).then(res => {
       setloadingInfoBoxTags(false)
-      setInfoBoxTags(res.data.tags)
+      setPostInfoBoxTags(res.data.tags)
     }).catch(err => {
       toast('خطا در بارگیری تگ های دسته بندی', {type: toast.TYPE.ERROR});
       setloadingInfoBoxTags(false)
-      setInfoBoxTags([])
+      setPostInfoBoxTags([])
     })
   }, [props])
 
@@ -295,8 +289,13 @@ function CategoriesInfoModal(props) {
 
   }
 
-  const infoBoxAbstractInputHandler = e => {
-    setInfoBoxAbstract(e.target.value)
+  const infoBoxDescInputHandler = e => {
+    let oldPost = {...this.state.post}
+    let oldPostTitle = oldPost.postTitle
+    oldPostTitle = e.target.value
+    oldPost.postTitle = oldPostTitle
+
+    setPost(oldPost)
   }
 
   const classes = styles();
@@ -357,23 +356,23 @@ const categoriesSetDetailsHandler = () => {
   setCategoriesSetDetailsLoading(true)
 
   axiosConfig.post('/Category/SetDetails', {
-    categoryGuid: info.node.categoryGuid,
-    abstract: infoBoxAbstract,
-    description: infoBoxDescription,
-    coverDocumentGuid: documentGuidForCover,
-    activeIconDocumentGuid: documentGuidForActiveIcon,
-    inactiveIconDocumentGuid: documentGuidForInActive,
-    quadMenuDocumentGuid: documentGuidForQuadMenu,
-    tags: infoBoxReplacedValues
+    categoryGuid: props.infoData.categoryGuid,
+    abstract: "string",
+    description: 'string',
+    coverDocumentGuid: 'string',
+    activeIconDocumentGuid: 'string',
+    inactiveIconDocumentGuid: 'string',
+    quadMenuDocumentGuid: 'string',
+    tags: [
+      "string"
+    ]
   }, {
-    headers: { Authorization: "Bearer " + props.token }
+    headers: { Authorization: "Bearer " + this.props.token }
   }).then(res => {
     console.log(res);
     setCategoriesSetDetailsLoading(false)
     props.hideInfoModal()
-    toast('عملیات موفقیت آمیز بود', {type: toast.TYPE.SUCCESS});
-  }).catch(err => {
-    toast('خطای شبکه', {type: toast.TYPE.ERROR});
+    toast('عملیات موفقیت آمیز بود', {type: toast.TYPE.ERROR});
   })
 }
 
@@ -662,11 +661,11 @@ const categoriesSetDetailsHandler = () => {
                 <TextField
                 label="توضیح مختصر"
                 className={[classes.inputs, "inputsDir", classes.titleMarginTop].join(' ')}
-                id="InfoBoxAbstract"
+                id="InfoBoxDesc"
                 // size="small"
                 defaultValue={post.postTitle}
                 variant="outlined"
-                onChange={(e) => infoBoxAbstractInputHandler(e)}
+                onChange={(e) => infoBoxDescInputHandler(e)}
                 />
               : 
               <Autocomplete
@@ -897,7 +896,7 @@ const categoriesSetDetailsHandler = () => {
               loading={loadingInfoBoxTags}
               loadingText="درحال بارگیری"
               noOptionsText="موردی یافت نشد"
-              options={infoBoxTags.map((option) => option.name)}
+              options={postInfoBoxTags.map((option) => option.name)}
               freeSolo
               onChange={(event, values) => {
                 autoCompleteChangeHandler(event, values)
