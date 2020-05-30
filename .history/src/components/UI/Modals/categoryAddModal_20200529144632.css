@@ -1,0 +1,16 @@
+.MuiTextField-root {
+    direction: rtl !important;
+}
+
+.infoBoxFilepondLabel {
+    width: 100%;
+    text-align: right !important;
+    font-size: 0.9rem !important;
+    margin-bottom: 0.5rem;
+}
+
+.MuiAutocomplete-noOptions,
+.MuiAutocomplete-option {
+    text-align: right !important;
+    direction: rtl !important;
+}

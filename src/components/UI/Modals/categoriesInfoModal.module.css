@@ -1,0 +1,10 @@
+.MuiTextField-root {
+    direction: rtl !important;
+}
+
+.infoBoxFilepondLabel {
+    width: 100%;
+    text-align: right !important;
+    font-size: 0.9rem !important;
+    margin-bottom: 0.5rem;
+}
