@@ -170,7 +170,7 @@ class Categories extends React.Component {
       
       if(res.data.state === 1) {
         this.setState({
-          treeData: res.data.category.children,
+          treeData: res.data.category.subCategories,
           loading: false
         })
       }
@@ -254,14 +254,13 @@ class Categories extends React.Component {
         headers: { Authorization: "Bearer " + this.props.token }
   
       }).then(res => {
-        console.log(res);
         axiosConfig.get('/Category/' + this.props.categoryGuid, {
           headers: { Authorization: "Bearer " + this.props.token }
         }).then(res => {
           console.log(res.data);
           
           this.setState({
-            treeData: res.data.category.children,
+            treeData: res.data.category.subCategories,
             openModal: false,
             buttonLoading: false,
             removeInputsValue: false
@@ -329,7 +328,7 @@ class Categories extends React.Component {
             console.log(res.data);
             
             this.setState({
-              treeData: res.data.category.children,
+              treeData: res.data.category.subCategories,
               openSubModal: false,
               subBtnLoading: false,
               removeSubInputsValue: false
@@ -383,7 +382,7 @@ class Categories extends React.Component {
           console.log(res);
           
           this.setState({
-            treeData: res.data.category.children,
+            treeData: res.data.category.subCategories,
             openDialog: false,
             delButtonLoading: false
           })
@@ -581,8 +580,10 @@ class Categories extends React.Component {
                       }}
                     />
                   </div>
+
               </div>
-                   
+                  
+                
                 {/* <PerfectScrollbar> */}
                 <div className="tree-wrapper" style={{height: 400}}>
 

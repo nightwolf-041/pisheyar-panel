@@ -170,7 +170,7 @@ class Categories extends React.Component {
       
       if(res.data.state === 1) {
         this.setState({
-          treeData: res.data.category.children,
+          treeData: res.data.category.subCategories,
           loading: false
         })
       }
@@ -261,7 +261,7 @@ class Categories extends React.Component {
           console.log(res.data);
           
           this.setState({
-            treeData: res.data.category.children,
+            treeData: res.data.category.subCategories,
             openModal: false,
             buttonLoading: false,
             removeInputsValue: false
@@ -329,7 +329,7 @@ class Categories extends React.Component {
             console.log(res.data);
             
             this.setState({
-              treeData: res.data.category.children,
+              treeData: res.data.category.subCategories,
               openSubModal: false,
               subBtnLoading: false,
               removeSubInputsValue: false
@@ -383,7 +383,7 @@ class Categories extends React.Component {
           console.log(res);
           
           this.setState({
-            treeData: res.data.category.children,
+            treeData: res.data.category.subCategories,
             openDialog: false,
             delButtonLoading: false
           })

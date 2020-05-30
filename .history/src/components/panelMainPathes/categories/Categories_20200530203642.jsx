@@ -621,7 +621,7 @@ class Categories extends React.Component {
                                   <button
                                   type="button"
                                   className="btn btn-link categorie-node-btns"
-                                  onClick={() => this.showInfoModal(rowInfo)}
+                                  onClick={() => this.openSubModalHandler(rowInfo)}
                                   >
                                     <FontAwesomeIcon icon={faEdit} className="categorie-info-icon text-info" />
                                   </button>

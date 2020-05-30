@@ -163,14 +163,14 @@ class Categories extends React.Component {
     })
     
     let guid = this.props.categoryGuid
-    axiosConfig.get('/Category/' + guid, {
+    axiosConfig.get(‍`/Category/'${guid}`, {
       headers: { Authorization: "Bearer " + this.props.token }
     }).then(res => {
       console.log(res.data);
       
       if(res.data.state === 1) {
         this.setState({
-          treeData: res.data.category.children,
+          treeData: res.data.categories,
           loading: false
         })
       }
@@ -254,14 +254,13 @@ class Categories extends React.Component {
         headers: { Authorization: "Bearer " + this.props.token }
   
       }).then(res => {
-        console.log(res);
         axiosConfig.get('/Category/' + this.props.categoryGuid, {
           headers: { Authorization: "Bearer " + this.props.token }
         }).then(res => {
           console.log(res.data);
           
           this.setState({
-            treeData: res.data.category.children,
+            treeData: res.data.categories,
             openModal: false,
             buttonLoading: false,
             removeInputsValue: false
@@ -300,13 +299,6 @@ class Categories extends React.Component {
 
     this.createSubNodeHandler = (nodeName, nodeOrder) => {
 
-      let obj = {
-        categoryGuid: rowInfo.node.categoryGuid,
-        name: nodeName,
-        order: nodeOrder
-      }
-      console.log(obj);
-
       if(nodeName.length === 0 || nodeOrder.length === 0) {
         this.setState({errorOnSubAdd: true})
       }else{
@@ -315,21 +307,20 @@ class Categories extends React.Component {
           errorOnSubAdd: false
         })
         axiosConfig.post('/Category/Create', {
-          categoryGuid: rowInfo.node.categoryGuid,
+          categoryGuid: rowInfo.node.guid,
           name: nodeName,
           order: nodeOrder
         }, {
           headers: { Authorization: "Bearer " + this.props.token }
 
         }).then(res => {
-            console.log(res);
             axiosConfig.get('/Category/' + this.props.categoryGuid, {
             headers: { Authorization: "Bearer " + this.props.token }
           }).then(res => {
             console.log(res.data);
             
             this.setState({
-              treeData: res.data.category.children,
+              treeData: res.data.categories,
               openSubModal: false,
               subBtnLoading: false,
               removeSubInputsValue: false
@@ -372,18 +363,16 @@ class Categories extends React.Component {
       })
 
       axiosConfig.post('/Category/Delete/', {
-        guid: rowInfo.node.categoryGuid
+        guid: rowInfo.node.guid
       }, {
         headers: { Authorization: "Bearer " + this.props.token }
       }).then(res => {
         axiosConfig.get('/Category/' + this.props.categoryGuid, {
           headers: { Authorization: "Bearer " + this.props.token }
         }).then(res => {
-
-          console.log(res);
           
           this.setState({
-            treeData: res.data.category.children,
+            treeData: res.data.categories,
             openDialog: false,
             delButtonLoading: false
           })
@@ -521,6 +510,465 @@ class Categories extends React.Component {
 
             <div className="wrapper">
 
+              {/* <div className="categories-info-box">
+              <PerfectScrollbar>
+
+              <FilePond ref={ref => this.pond = ref}
+                files={this.state.files}
+                allowMultiple={false}
+                maxFiles={1}
+                checkValidity={true}
+                // allowFilePoster={false}
+                allowFileSizeValidation={true}
+                maxFileSize='1MB'
+                labelMaxFileSizeExceeded="حجم فایل زیاد است"
+                labelMaxFileSize="حداکثر حجم مجاز: {filesize}"
+                allowImagePreview={true}
+                imagePreviewMaxHeight={300}
+                allowImageValidateSize={true}
+                imageValidateSizeMinWidth={300}
+                imageValidateSizeMaxWidth={750}
+                imageValidateSizeMinHeight={300}
+                imageValidateSizeMaxHeight={750}
+                imageValidateSizeLabelFormatError="نوع عکس مجاز نیست"
+                imageValidateSizeLabelImageSizeTooSmall="عکس بسیار کوچک است"
+                imageValidateSizeLabelImageSizeTooBig="عکس بسیار بزرگ است"
+                imageValidateSizeLabelExpectedMinSize="حداقل سایز عکس: {minWidth} × {minHeight}"
+                imageValidateSizeLabelExpectedMaxSize="حداکثر سایز عکس: {maxWidth} × {maxHeight}"
+                allowFileTypeValidation={true}
+                acceptedFileTypes={['image/png', 'image/jpg', 'image/jpeg']}
+                labelFileTypeNotAllowed="فایل انتخابی مجاز نیست"
+                server = {{
+                  url: 'http://185.94.97.164/api/Uploader',
+                  process: '/FilepondProcess',
+                  revert: {
+                    url: '/FilepondRevert',
+                    method: 'POST'
+                  }
+                }}
+                onprocessfile={(error, file) => this.setState({documentGuid: file.serverId})}
+                onupdatefiles={(fileItems) => {
+                    this.setState({
+                        files: fileItems.map(fileItem => fileItem.file)
+                    });
+                }}
+                labelIdle="عکس را اینجا رها یا کلیک کنید"
+                labelInvalidField="فایل معنبر نیست"
+                labelFileProcessing="درحال بارگذاری"
+                labelFileProcessingError="خطا در بارگذاری"
+                labelFileLoading="درحال بارگیری"
+                labelFileLoadError="خطا در بارگیری"
+                labelFileProcessingComplete="بارگذاری موفق"
+                labelFileProcessingAborted="لغو بارگذاری"
+                labelFileProcessingRevertError="خطا در بازگشتن"
+                labelFileRemoveError="خطا در حذف"
+
+                labelTapToCancel="لغو"
+                labelTapToRetry="تلاش مجدد"
+                labelTapToUndo="بازگردانی"
+                labelButtonRemoveItem="حذف"
+                labelButtonRetryItemLoad="تلاش مجدد"
+                labelButtonAbortItemProcessing="لغو"
+                labelButtonUndoItemProcessing="بازنشانی"
+                labelButtonRetryItemProcessing="تلاش مجدد"
+                labelButtonProcessItem="بارگذاری"
+                >
+              </FilePond>
+              <FilePond ref={ref => this.pond = ref}
+                files={this.state.files}
+                allowMultiple={false}
+                maxFiles={1}
+                checkValidity={true}
+                // allowFilePoster={false}
+                allowFileSizeValidation={true}
+                maxFileSize='1MB'
+                labelMaxFileSizeExceeded="حجم فایل زیاد است"
+                labelMaxFileSize="حداکثر حجم مجاز: {filesize}"
+                allowImagePreview={true}
+                imagePreviewMaxHeight={300}
+                allowImageValidateSize={true}
+                imageValidateSizeMinWidth={300}
+                imageValidateSizeMaxWidth={750}
+                imageValidateSizeMinHeight={300}
+                imageValidateSizeMaxHeight={750}
+                imageValidateSizeLabelFormatError="نوع عکس مجاز نیست"
+                imageValidateSizeLabelImageSizeTooSmall="عکس بسیار کوچک است"
+                imageValidateSizeLabelImageSizeTooBig="عکس بسیار بزرگ است"
+                imageValidateSizeLabelExpectedMinSize="حداقل سایز عکس: {minWidth} × {minHeight}"
+                imageValidateSizeLabelExpectedMaxSize="حداکثر سایز عکس: {maxWidth} × {maxHeight}"
+                allowFileTypeValidation={true}
+                acceptedFileTypes={['image/png', 'image/jpg', 'image/jpeg']}
+                labelFileTypeNotAllowed="فایل انتخابی مجاز نیست"
+                server = {{
+                  url: 'http://185.94.97.164/api/Uploader',
+                  process: '/FilepondProcess',
+                  revert: {
+                    url: '/FilepondRevert',
+                    method: 'POST'
+                  }
+                }}
+                onprocessfile={(error, file) => this.setState({documentGuid: file.serverId})}
+                onupdatefiles={(fileItems) => {
+                    this.setState({
+                        files: fileItems.map(fileItem => fileItem.file)
+                    });
+                }}
+                labelIdle="عکس را اینجا رها یا کلیک کنید"
+                labelInvalidField="فایل معنبر نیست"
+                labelFileProcessing="درحال بارگذاری"
+                labelFileProcessingError="خطا در بارگذاری"
+                labelFileLoading="درحال بارگیری"
+                labelFileLoadError="خطا در بارگیری"
+                labelFileProcessingComplete="بارگذاری موفق"
+                labelFileProcessingAborted="لغو بارگذاری"
+                labelFileProcessingRevertError="خطا در بازگشتن"
+                labelFileRemoveError="خطا در حذف"
+
+                labelTapToCancel="لغو"
+                labelTapToRetry="تلاش مجدد"
+                labelTapToUndo="بازگردانی"
+                labelButtonRemoveItem="حذف"
+                labelButtonRetryItemLoad="تلاش مجدد"
+                labelButtonAbortItemProcessing="لغو"
+                labelButtonUndoItemProcessing="بازنشانی"
+                labelButtonRetryItemProcessing="تلاش مجدد"
+                labelButtonProcessItem="بارگذاری"
+                >
+              </FilePond>
+              <FilePond ref={ref => this.pond = ref}
+                files={this.state.files}
+                allowMultiple={false}
+                maxFiles={1}
+                checkValidity={true}
+                // allowFilePoster={false}
+                allowFileSizeValidation={true}
+                maxFileSize='1MB'
+                labelMaxFileSizeExceeded="حجم فایل زیاد است"
+                labelMaxFileSize="حداکثر حجم مجاز: {filesize}"
+                allowImagePreview={true}
+                imagePreviewMaxHeight={300}
+                allowImageValidateSize={true}
+                imageValidateSizeMinWidth={300}
+                imageValidateSizeMaxWidth={750}
+                imageValidateSizeMinHeight={300}
+                imageValidateSizeMaxHeight={750}
+                imageValidateSizeLabelFormatError="نوع عکس مجاز نیست"
+                imageValidateSizeLabelImageSizeTooSmall="عکس بسیار کوچک است"
+                imageValidateSizeLabelImageSizeTooBig="عکس بسیار بزرگ است"
+                imageValidateSizeLabelExpectedMinSize="حداقل سایز عکس: {minWidth} × {minHeight}"
+                imageValidateSizeLabelExpectedMaxSize="حداکثر سایز عکس: {maxWidth} × {maxHeight}"
+                allowFileTypeValidation={true}
+                acceptedFileTypes={['image/png', 'image/jpg', 'image/jpeg']}
+                labelFileTypeNotAllowed="فایل انتخابی مجاز نیست"
+                server = {{
+                  url: 'http://185.94.97.164/api/Uploader',
+                  process: '/FilepondProcess',
+                  revert: {
+                    url: '/FilepondRevert',
+                    method: 'POST'
+                  }
+                }}
+                onprocessfile={(error, file) => this.setState({documentGuid: file.serverId})}
+                onupdatefiles={(fileItems) => {
+                    this.setState({
+                        files: fileItems.map(fileItem => fileItem.file)
+                    });
+                }}
+                labelIdle="عکس را اینجا رها یا کلیک کنید"
+                labelInvalidField="فایل معنبر نیست"
+                labelFileProcessing="درحال بارگذاری"
+                labelFileProcessingError="خطا در بارگذاری"
+                labelFileLoading="درحال بارگیری"
+                labelFileLoadError="خطا در بارگیری"
+                labelFileProcessingComplete="بارگذاری موفق"
+                labelFileProcessingAborted="لغو بارگذاری"
+                labelFileProcessingRevertError="خطا در بازگشتن"
+                labelFileRemoveError="خطا در حذف"
+
+                labelTapToCancel="لغو"
+                labelTapToRetry="تلاش مجدد"
+                labelTapToUndo="بازگردانی"
+                labelButtonRemoveItem="حذف"
+                labelButtonRetryItemLoad="تلاش مجدد"
+                labelButtonAbortItemProcessing="لغو"
+                labelButtonUndoItemProcessing="بازنشانی"
+                labelButtonRetryItemProcessing="تلاش مجدد"
+                labelButtonProcessItem="بارگذاری"
+                >
+              </FilePond>
+              <FilePond ref={ref => this.pond = ref}
+                files={this.state.files}
+                allowMultiple={false}
+                maxFiles={1}
+                checkValidity={true}
+                // allowFilePoster={false}
+                allowFileSizeValidation={true}
+                maxFileSize='1MB'
+                labelMaxFileSizeExceeded="حجم فایل زیاد است"
+                labelMaxFileSize="حداکثر حجم مجاز: {filesize}"
+                allowImagePreview={true}
+                imagePreviewMaxHeight={300}
+                allowImageValidateSize={true}
+                imageValidateSizeMinWidth={300}
+                imageValidateSizeMaxWidth={750}
+                imageValidateSizeMinHeight={300}
+                imageValidateSizeMaxHeight={750}
+                imageValidateSizeLabelFormatError="نوع عکس مجاز نیست"
+                imageValidateSizeLabelImageSizeTooSmall="عکس بسیار کوچک است"
+                imageValidateSizeLabelImageSizeTooBig="عکس بسیار بزرگ است"
+                imageValidateSizeLabelExpectedMinSize="حداقل سایز عکس: {minWidth} × {minHeight}"
+                imageValidateSizeLabelExpectedMaxSize="حداکثر سایز عکس: {maxWidth} × {maxHeight}"
+                allowFileTypeValidation={true}
+                acceptedFileTypes={['image/png', 'image/jpg', 'image/jpeg']}
+                labelFileTypeNotAllowed="فایل انتخابی مجاز نیست"
+                server = {{
+                  url: 'http://185.94.97.164/api/Uploader',
+                  process: '/FilepondProcess',
+                  revert: {
+                    url: '/FilepondRevert',
+                    method: 'POST'
+                  }
+                }}
+                onprocessfile={(error, file) => this.setState({documentGuid: file.serverId})}
+                onupdatefiles={(fileItems) => {
+                    this.setState({
+                        files: fileItems.map(fileItem => fileItem.file)
+                    });
+                }}
+                labelIdle="عکس را اینجا رها یا کلیک کنید"
+                labelInvalidField="فایل معنبر نیست"
+                labelFileProcessing="درحال بارگذاری"
+                labelFileProcessingError="خطا در بارگذاری"
+                labelFileLoading="درحال بارگیری"
+                labelFileLoadError="خطا در بارگیری"
+                labelFileProcessingComplete="بارگذاری موفق"
+                labelFileProcessingAborted="لغو بارگذاری"
+                labelFileProcessingRevertError="خطا در بازگشتن"
+                labelFileRemoveError="خطا در حذف"
+
+                labelTapToCancel="لغو"
+                labelTapToRetry="تلاش مجدد"
+                labelTapToUndo="بازگردانی"
+                labelButtonRemoveItem="حذف"
+                labelButtonRetryItemLoad="تلاش مجدد"
+                labelButtonAbortItemProcessing="لغو"
+                labelButtonUndoItemProcessing="بازنشانی"
+                labelButtonRetryItemProcessing="تلاش مجدد"
+                labelButtonProcessItem="بارگذاری"
+                >
+              </FilePond>
+
+              <CKEditor
+            editor={ClassicEditor}
+            config={
+              
+              {
+                plugins: [Undo, RemoveFormat, Essentials, Bold, Italic, Underline, ParagraphButtonUI, HeadingButtonsUI, HorizontalLine, Paragraph, Blockquote,  SpecialCharacters, SpecialCharactersCurrency, SpecialCharactersMathematical,
+                Heading, Alignment, Indent, IndentBlock, PasteFromOffice, Highlight, Font, FontSize, list, Table, TableToolbar, TableProperties, TableCellProperties, Image, ImageToolbar, ImageCaption, ImageStyle, ImageResize, ImageUpload, Link , EasyImage, SimpleUploadAdapter, MediaEmbed, Clipboard ],
+                
+                  toolbar: this.resToolbar,
+
+                  image: {
+                    label: 'عکس',
+                    toolbar: [ 'imageTextAlternative', '|', 'imageStyle:alignLeft', 'imageStyle:full', 'imageStyle:alignRight' ],
+                    styles: [
+                      'full',
+                      'alignLeft',
+                      'alignRight'
+                    ]
+                  },
+
+                  highlight: {
+                    options: [
+                        {
+                            model: 'greenMarker',
+                            class: 'marker-green',
+                            title: 'نشانگر سبز',
+                            color: 'rgba(116, 226, 122, 0.459)',
+                            type: 'marker'
+                        },
+                        {
+                            model: 'redMarker',
+                            class: 'marker-red',
+                            title: 'نشانگر قرمز',
+                            color: '#f7534775',
+                            type: 'marker'
+                        },
+                        {
+                            model: 'yellowMarker',
+                            class: 'marker-yellow',
+                            title: 'نشانگر زرد',
+                            color: 'rgba(255, 233, 36, 0.459)',
+                            type: 'marker'
+                        },
+                        {
+                            model: 'blueMarker',
+                            class: 'marker-blue',
+                            title: 'نشانگر آبی',
+                            color: "#BBDEFB",
+                            type: 'marker'
+                        },
+                        {
+                            model: 'greyMarker',
+                            class: 'marker-grey',
+                            title: 'نشانگر خاکستری',
+                            color: "rgba(204, 204, 204, 0.726)",
+                            type: 'marker'
+                        },
+                    ]
+                },
+
+                  heading: {
+                    options: [
+                        { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
+                        { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
+                        { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
+                        { model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' },
+                        { model: 'heading4', view: 'h4', title: 'Heading 4', class: 'ck-heading_heading4' },
+                        { model: 'heading5', view: 'h5', title: 'Heading 5', class: 'ck-heading_heading5' },
+                    ]
+                  },
+
+                  fontSize: {
+                    options: [
+                      'tiny',
+                      'small',
+                      'big',
+                      'default',
+                      14,
+                      19
+                    ]
+                },
+
+                  fontColor: {
+                    colors: [
+                        {
+                            color: 'hsl(0, 0%, 0%)',
+                            label: 'مشکی'
+                        },
+                        {
+                            color: 'hsl(0, 0%, 30%)',
+                            label: 'خاکستری تیره'
+                        },
+                        {
+                          color: '#868e96 ',
+                          label: 'خاکستری BS'
+                        },
+                        {
+                            color: 'hsl(0, 0%, 60%)',
+                            label: 'خاکستری'
+                        },
+                        {
+                            color: 'hsl(0, 0%, 90%)',
+                            label: 'خاکستری روشن'
+                        },
+                        {
+                            color: 'hsl(0, 0%, 100%)',
+                            label: 'سفید',
+                            hasBorder: true
+                        },
+                        {
+                          color: '#f44336',
+                          label: 'قرمز'
+                        },
+                        {
+                          color: '#03A9F4',
+                          label: 'آبی'
+                        },
+                        {
+                          color: '#4CAF50',
+                          label: 'سبز'
+                        },
+                        {
+                          color: '#FFEB3B',
+                          label: 'زرد'
+                        },
+                    ],
+                    columns: 5
+                },
+
+                fontBackgroundColor: {
+                    colors: [
+                        {
+                            color: '#0275d8',
+                            label: 'اقدامات'
+                        },
+                        {
+                            color: '#5cb85c',
+                            label: 'موفقیت'
+                        },
+                        {
+                            color: '#5bc0de',
+                            label: 'اطلاعات'
+                        },
+                        {
+                            color: '#ffc107 ',
+                            label: 'هشدار'
+                        },
+                        {
+                            color: '#d9534f',
+                            label: 'اخطار'
+                        },
+                        {
+                            color: '#292b2c',
+                            label: 'معکوس'
+                        },
+                        {
+                          color: 'hsl(0, 0%, 30%)',
+                          label: 'خاکستری تیره'
+                        },
+                        {
+                            color: '#868e96',
+                            label: 'خاکستری BS'
+                        },
+                    ],
+                    columns: 4
+                },
+
+                table: {
+                  contentToolbar: [
+                      'tableColumn', 'tableRow', 'mergeTableCells',
+                      'tableProperties', 'tableCellProperties'
+                  ],
+      
+                  tableProperties: {
+                      borderColors: customColorPalette,
+                      backgroundColors: customColorPalette
+                  },
+      
+                  tableCellProperties: {
+                      borderColors: customColorPalette,
+                      backgroundColors: customColorPalette
+                  }
+                },
+
+
+                  language: {
+                    ui: 'fa',
+        
+                    content: 'fa'
+                  },
+                  placeholder: 'پست خود را ایجاد کنید',
+
+                  simpleUpload: {
+                    uploadUrl: 'http://185.94.97.164/api/Uploader/CKEditor',
+                    headers: {
+                      'X-CSRF-TOKEN': 'CSFR-Token',
+                      Authorization: 'Bearer <JSON Web Token>'
+                      // Authorization: "Bearer " + this.props.token
+                    }
+                  }
+              }
+            }
+            onChange={(event, editor) => {
+              const data = editor.getData();
+              this.setState({description: data})
+            }}
+          />
+
+              </PerfectScrollbar>
+              </div> */}
+
               <div className="categories-info-box-insidebox">
 
               <div className="bar-wrapper"> 
@@ -581,8 +1029,10 @@ class Categories extends React.Component {
                       }}
                     />
                   </div>
+
               </div>
-                   
+                  
+                
                 {/* <PerfectScrollbar> */}
                 <div className="tree-wrapper" style={{height: 400}}>
 

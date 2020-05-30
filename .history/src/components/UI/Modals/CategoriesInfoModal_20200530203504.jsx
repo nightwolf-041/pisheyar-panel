@@ -106,7 +106,7 @@ const styles = makeStyles(theme => ({
     width: '90%',
     maxWidth: '1000px',
     height: '95vh',
-    padding: theme.spacing(3, 3, 3),
+    padding: theme.spacing(2, 2, 2.5),
     borderRadius: '4px',
     margin: '0 auto',
     overflowX: 'hidden'
@@ -254,7 +254,7 @@ function CategoriesInfoModal(props) {
       setloadingInfoBoxTags(false)
       setPostInfoBoxTags(res.data.tags)
     }).catch(err => {
-      toast('خطا در بارگیری تگ های دسته بندی', {type: toast.TYPE.ERROR});
+      toast('خطا در بارگیری تگ های پست', {type: toast.TYPE.ERROR});
       setloadingInfoBoxTags(false)
       setPostInfoBoxTags([])
     })

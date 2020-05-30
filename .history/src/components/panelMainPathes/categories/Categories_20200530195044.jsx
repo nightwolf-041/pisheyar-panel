@@ -170,7 +170,7 @@ class Categories extends React.Component {
       
       if(res.data.state === 1) {
         this.setState({
-          treeData: res.data.category.children,
+          treeData: res.data.category.subCategories,
           loading: false
         })
       }
@@ -254,14 +254,13 @@ class Categories extends React.Component {
         headers: { Authorization: "Bearer " + this.props.token }
   
       }).then(res => {
-        console.log(res);
         axiosConfig.get('/Category/' + this.props.categoryGuid, {
           headers: { Authorization: "Bearer " + this.props.token }
         }).then(res => {
           console.log(res.data);
           
           this.setState({
-            treeData: res.data.category.children,
+            treeData: res.data.category.subCategories,
             openModal: false,
             buttonLoading: false,
             removeInputsValue: false
@@ -300,13 +299,6 @@ class Categories extends React.Component {
 
     this.createSubNodeHandler = (nodeName, nodeOrder) => {
 
-      let obj = {
-        categoryGuid: rowInfo.node.categoryGuid,
-        name: nodeName,
-        order: nodeOrder
-      }
-      console.log(obj);
-
       if(nodeName.length === 0 || nodeOrder.length === 0) {
         this.setState({errorOnSubAdd: true})
       }else{
@@ -315,21 +307,20 @@ class Categories extends React.Component {
           errorOnSubAdd: false
         })
         axiosConfig.post('/Category/Create', {
-          categoryGuid: rowInfo.node.categoryGuid,
+          categoryGuid: rowInfo.node.guid,
           name: nodeName,
           order: nodeOrder
         }, {
           headers: { Authorization: "Bearer " + this.props.token }
 
         }).then(res => {
-            console.log(res);
             axiosConfig.get('/Category/' + this.props.categoryGuid, {
             headers: { Authorization: "Bearer " + this.props.token }
           }).then(res => {
             console.log(res.data);
             
             this.setState({
-              treeData: res.data.category.children,
+              treeData: res.data.category.subCategories,
               openSubModal: false,
               subBtnLoading: false,
               removeSubInputsValue: false
@@ -372,18 +363,16 @@ class Categories extends React.Component {
       })
 
       axiosConfig.post('/Category/Delete/', {
-        guid: rowInfo.node.categoryGuid
+        guid: rowInfo.node.guid
       }, {
         headers: { Authorization: "Bearer " + this.props.token }
       }).then(res => {
         axiosConfig.get('/Category/' + this.props.categoryGuid, {
           headers: { Authorization: "Bearer " + this.props.token }
         }).then(res => {
-
-          console.log(res);
           
           this.setState({
-            treeData: res.data.category.children,
+            treeData: res.data.category.subCategories,
             openDialog: false,
             delButtonLoading: false
           })
@@ -581,8 +570,10 @@ class Categories extends React.Component {
                       }}
                     />
                   </div>
+
               </div>
-                   
+                  
+                
                 {/* <PerfectScrollbar> */}
                 <div className="tree-wrapper" style={{height: 400}}>
 
