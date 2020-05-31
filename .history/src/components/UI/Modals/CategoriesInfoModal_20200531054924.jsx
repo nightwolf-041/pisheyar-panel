@@ -28,7 +28,7 @@ import Paragraph from "@ckeditor/ckeditor5-paragraph/src/paragraph";
 import SpecialCharacters from '@ckeditor/ckeditor5-special-characters/src/specialcharacters';
 import SpecialCharactersCurrency from '@ckeditor/ckeditor5-special-characters/src/specialcharacterscurrency';
 import SpecialCharactersMathematical from '@ckeditor/ckeditor5-special-characters/src/specialcharactersmathematical';
-import BlockToolbar from '@ckeditor/ckeditor5-ui/src/toolbar/block/blocktoolbar';
+// import BlockToolbar from '@ckeditor/ckeditor5-ui/src/toolbar/block/blocktoolbar';
 import HeadingButtonsUI from '@ckeditor/ckeditor5-heading/src/headingbuttonsui';
 import ParagraphButtonUI from '@ckeditor/ckeditor5-paragraph/src/paragraphbuttonui';
 import Heading from '@ckeditor/ckeditor5-heading/src/heading';
@@ -44,7 +44,7 @@ import ImageCaption from '@ckeditor/ckeditor5-image/src/imagecaption';
 import ImageStyle from '@ckeditor/ckeditor5-image/src/imagestyle';
 import ImageResize from '@ckeditor/ckeditor5-image/src/imageresize';
 import ImageUpload from '@ckeditor/ckeditor5-image/src/imageupload';
-import CKfinder from '@ckeditor/ckeditor5-ckfinder/src/ckfinder'
+// import CKfinder from '@ckeditor/ckeditor5-ckfinder/src/ckfinder'
 import EasyImage from '@ckeditor/ckeditor5-easy-image/src/easyimage';
 import MediaEmbed from '@ckeditor/ckeditor5-media-embed/src/mediaembed';
 import list from '@ckeditor/ckeditor5-list/src/list';
@@ -55,7 +55,7 @@ import TableCellProperties from '@ckeditor/ckeditor5-table/src/tablecellproperti
 import HorizontalLine from '@ckeditor/ckeditor5-horizontal-line/src/horizontalline';
 import Highlight from '@ckeditor/ckeditor5-highlight/src/highlight';
 import Blockquote from '@ckeditor/ckeditor5-block-quote/src/blockquote';
-import Codeblock from '@ckeditor/ckeditor5-code-block/src/codeblock';
+// import Codeblock from '@ckeditor/ckeditor5-code-block/src/codeblock';
 import PasteFromOffice from '@ckeditor/ckeditor5-paste-from-office/src/pastefromoffice';
 import Clipboard from '@ckeditor/ckeditor5-clipboard/src/clipboard'
 import SimpleUploadAdapter from '@ckeditor/ckeditor5-upload/src/adapters/simpleuploadadapter';
@@ -65,12 +65,10 @@ import { FilePond, registerPlugin } from 'react-filepond';
 import 'filepond/dist/filepond.min.css';
 import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orientation';
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
-import FilePondPluginFilePoster from 'filepond-plugin-file-poster'
 import FilePondPluginFileValidateSize from 'filepond-plugin-file-validate-size';
 import FilePondPluginImageValidateSize from 'filepond-plugin-image-validate-size';
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
-import 'filepond-plugin-file-poster/dist/filepond-plugin-file-poster.css';
 
 import classes from './categoriesInfoModal.module.css'
 import './categoryAddModal.css'
@@ -269,7 +267,6 @@ function CategoriesInfoModal(props) {
     if(props.infoData) {
       let modalInfo = {...props.infoData.node}
       let guid = modalInfo.categoryGuid
-
       axiosConfig.get('/Category/' + guid, {
         headers: { Authorization: "Bearer " + props.token }
 
@@ -278,7 +275,6 @@ function CategoriesInfoModal(props) {
         if(res.data.state === 1) {
           setInfo({...res.data.category})
           let data = {...res.data.category}
-          console.log(data);
 
           setInfoBoxAbstract(data.abstract)
           setDefaultInfoBoxAbstract('donee')
@@ -471,17 +467,6 @@ const categoriesSetDetailsHandler = () => {
   setInfoBoxReplacedValues(replacedTrimedValues)
   console.log(replacedTrimedValues);
 
-  let objj = {
-    categoryGuid: info.categoryGuid,
-    abstract: infoBoxAbstract,
-    description: infoBoxDescription,
-    coverDocumentGuid: documentGuidForCover.replace(/['"]+/g, ''),
-    activeIconDocumentGuid: documentGuidForActiveIcon.replace(/['"]+/g, ''),
-    inactiveIconDocumentGuid: documentGuidForInActive.replace(/['"]+/g, ''),
-    quadMenuDocumentGuid: documentGuidForQuadMenu.replace(/['"]+/g, ''),
-    tags: replacedTrimedValues
-  }
-
   axiosConfig.post('/Category/SetDetails', {
     categoryGuid: info.categoryGuid,
     abstract: infoBoxAbstract,
@@ -494,7 +479,6 @@ const categoriesSetDetailsHandler = () => {
   }, {
     headers: { Authorization: "Bearer " + props.token }
   }).then(res => {
-    console.log(objj);
     console.log(res);
     setCategoriesSetDetailsLoading(false)
     props.hideInfoModal()
@@ -609,7 +593,7 @@ const categoriesSetDetailsHandler = () => {
                 labelMaxFileSizeExceeded="حجم فایل زیاد است"
                 labelMaxFileSize="حداکثر حجم مجاز: {filesize}"
                 allowImagePreview={true}
-                imagePreviewMaxHeight={150}
+                imagePreviewMaxHeight={200}
                 allowImageValidateSize={true}
                 imageValidateSizeMinWidth={10}
                 imageValidateSizeMaxWidth={300}
@@ -673,7 +657,7 @@ const categoriesSetDetailsHandler = () => {
                 labelMaxFileSizeExceeded="حجم فایل زیاد است"
                 labelMaxFileSize="حداکثر حجم مجاز: {filesize}"
                 allowImagePreview={true}
-                imagePreviewMaxHeight={150}
+                imagePreviewMaxHeight={200}
                 allowImageValidateSize={true}
                 imageValidateSizeMinWidth={10}
                 imageValidateSizeMaxWidth={300}
@@ -1029,8 +1013,9 @@ const categoriesSetDetailsHandler = () => {
               loadingText="درحال بارگیری"
               noOptionsText="موردی یافت نشد"
               options={infoBoxTags.map((option) => option.name)}
-              value={infoBoxTrimedValues}
-              // defaultValue={infoBoxTrimedValues}
+              getOptionSelected={(option) => option.title}
+              getOptionLabel={(option) => option.title}
+              defaultValue={infoBoxTrimedValues}
               disabled={loadingInfoBoxTags}
               freeSolo
               onChange={(event, values) => {

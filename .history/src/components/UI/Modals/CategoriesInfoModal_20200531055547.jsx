@@ -471,17 +471,6 @@ const categoriesSetDetailsHandler = () => {
   setInfoBoxReplacedValues(replacedTrimedValues)
   console.log(replacedTrimedValues);
 
-  let objj = {
-    categoryGuid: info.categoryGuid,
-    abstract: infoBoxAbstract,
-    description: infoBoxDescription,
-    coverDocumentGuid: documentGuidForCover.replace(/['"]+/g, ''),
-    activeIconDocumentGuid: documentGuidForActiveIcon.replace(/['"]+/g, ''),
-    inactiveIconDocumentGuid: documentGuidForInActive.replace(/['"]+/g, ''),
-    quadMenuDocumentGuid: documentGuidForQuadMenu.replace(/['"]+/g, ''),
-    tags: replacedTrimedValues
-  }
-
   axiosConfig.post('/Category/SetDetails', {
     categoryGuid: info.categoryGuid,
     abstract: infoBoxAbstract,
@@ -494,7 +483,6 @@ const categoriesSetDetailsHandler = () => {
   }, {
     headers: { Authorization: "Bearer " + props.token }
   }).then(res => {
-    console.log(objj);
     console.log(res);
     setCategoriesSetDetailsLoading(false)
     props.hideInfoModal()
@@ -1029,8 +1017,9 @@ const categoriesSetDetailsHandler = () => {
               loadingText="درحال بارگیری"
               noOptionsText="موردی یافت نشد"
               options={infoBoxTags.map((option) => option.name)}
-              value={infoBoxTrimedValues}
-              // defaultValue={infoBoxTrimedValues}
+              getOptionSelected={(option) => option.title}
+              getOptionLabel={(option) => option.title}
+              defaultValue={infoBoxTrimedValues}
               disabled={loadingInfoBoxTags}
               freeSolo
               onChange={(event, values) => {

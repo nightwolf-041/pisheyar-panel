@@ -482,6 +482,8 @@ const categoriesSetDetailsHandler = () => {
     tags: replacedTrimedValues
   }
 
+ 
+
   axiosConfig.post('/Category/SetDetails', {
     categoryGuid: info.categoryGuid,
     abstract: infoBoxAbstract,

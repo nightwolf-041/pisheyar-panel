@@ -482,6 +482,8 @@ const categoriesSetDetailsHandler = () => {
     tags: replacedTrimedValues
   }
 
+  console.log(objj);
+
   axiosConfig.post('/Category/SetDetails', {
     categoryGuid: info.categoryGuid,
     abstract: infoBoxAbstract,
@@ -494,7 +496,6 @@ const categoriesSetDetailsHandler = () => {
   }, {
     headers: { Authorization: "Bearer " + props.token }
   }).then(res => {
-    console.log(objj);
     console.log(res);
     setCategoriesSetDetailsLoading(false)
     props.hideInfoModal()

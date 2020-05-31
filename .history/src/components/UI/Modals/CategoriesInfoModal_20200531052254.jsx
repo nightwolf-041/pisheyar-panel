@@ -65,24 +65,21 @@ import { FilePond, registerPlugin } from 'react-filepond';
 import 'filepond/dist/filepond.min.css';
 import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orientation';
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
-import FilePondPluginFilePoster from 'filepond-plugin-file-poster'
 import FilePondPluginFileValidateSize from 'filepond-plugin-file-validate-size';
 import FilePondPluginImageValidateSize from 'filepond-plugin-image-validate-size';
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
-import 'filepond-plugin-file-poster/dist/filepond-plugin-file-poster.css';
 
 import classes from './categoriesInfoModal.module.css'
 import './categoryAddModal.css'
 
 registerPlugin(
-  FilePondPluginImageExifOrientation,
-  FilePondPluginImagePreview,
-  FilePondPluginFilePoster,
-  FilePondPluginFileValidateSize,
-  FilePondPluginImageValidateSize,
-  FilePondPluginFileValidateType
-  );
+    FilePondPluginImageExifOrientation,
+    FilePondPluginImagePreview,
+    FilePondPluginFileValidateSize,
+    FilePondPluginImageValidateSize,
+    FilePondPluginFileValidateType
+);
 
 
 let width
@@ -232,10 +229,10 @@ function CategoriesInfoModal(props) {
   
   const [info, setInfo] = React.useState(null);
 
-  const [documentGuidForCover, setDocumentGuidForCover] = React.useState(null);
-  const [documentGuidForActiveIcon, setDocumentGuidForActiveIcon] = React.useState(null);
-  const [documentGuidForInActive, setDocumentGuidForInActive] = React.useState(null);
-  const [documentGuidForQuadMenu, setDocumentGuidForQuadMenu] = React.useState(null);
+  const [documentGuidForCover, setDocumentGuidForCover] = React.useState('');
+  const [documentGuidForActiveIcon, setDocumentGuidForActiveIcon] = React.useState('');
+  const [documentGuidForInActive, setDocumentGuidForInActive] = React.useState('');
+  const [documentGuidForQuadMenu, setDocumentGuidForQuadMenu] = React.useState('');
   const [fileForCover, setFileForCover] = React.useState([]);
   const [fileForActiveIcon, setFileForActiveIcon] = React.useState([]);
   const [fileForInActive, setFileForInActive] = React.useState([]);
@@ -269,7 +266,6 @@ function CategoriesInfoModal(props) {
     if(props.infoData) {
       let modalInfo = {...props.infoData.node}
       let guid = modalInfo.categoryGuid
-
       axiosConfig.get('/Category/' + guid, {
         headers: { Authorization: "Bearer " + props.token }
 
@@ -278,7 +274,6 @@ function CategoriesInfoModal(props) {
         if(res.data.state === 1) {
           setInfo({...res.data.category})
           let data = {...res.data.category}
-          console.log(data);
 
           setInfoBoxAbstract(data.abstract)
           setDefaultInfoBoxAbstract('donee')
@@ -471,17 +466,6 @@ const categoriesSetDetailsHandler = () => {
   setInfoBoxReplacedValues(replacedTrimedValues)
   console.log(replacedTrimedValues);
 
-  let objj = {
-    categoryGuid: info.categoryGuid,
-    abstract: infoBoxAbstract,
-    description: infoBoxDescription,
-    coverDocumentGuid: documentGuidForCover.replace(/['"]+/g, ''),
-    activeIconDocumentGuid: documentGuidForActiveIcon.replace(/['"]+/g, ''),
-    inactiveIconDocumentGuid: documentGuidForInActive.replace(/['"]+/g, ''),
-    quadMenuDocumentGuid: documentGuidForQuadMenu.replace(/['"]+/g, ''),
-    tags: replacedTrimedValues
-  }
-
   axiosConfig.post('/Category/SetDetails', {
     categoryGuid: info.categoryGuid,
     abstract: infoBoxAbstract,
@@ -494,15 +478,10 @@ const categoriesSetDetailsHandler = () => {
   }, {
     headers: { Authorization: "Bearer " + props.token }
   }).then(res => {
-    console.log(objj);
     console.log(res);
     setCategoriesSetDetailsLoading(false)
     props.hideInfoModal()
-    if(res.data.state === 1) {
-      toast('عملیات موفقیت آمیز بود', {type: toast.TYPE.SUCCESS});
-    }else{
-      toast(res.data.message, {type: toast.TYPE.ERROR});
-    }
+    toast('عملیات موفقیت آمیز بود', {type: toast.TYPE.SUCCESS});
   }).catch(err => {
     toast('خطای شبکه', {type: toast.TYPE.ERROR});
   })
@@ -539,7 +518,7 @@ const categoriesSetDetailsHandler = () => {
                 allowMultiple={false}
                 maxFiles={1}
                 checkValidity={true}
-                allowFilePoster={true}
+                // allowFilePoster={false}
                 allowFileSizeValidation={true}
                 maxFileSize='1MB'
                 labelMaxFileSizeExceeded="حجم فایل زیاد است"
@@ -603,13 +582,13 @@ const categoriesSetDetailsHandler = () => {
                 allowMultiple={false}
                 maxFiles={1}
                 checkValidity={true}
-                allowFilePoster={true}
+                // allowFilePoster={false}
                 allowFileSizeValidation={true}
                 maxFileSize='1MB'
                 labelMaxFileSizeExceeded="حجم فایل زیاد است"
                 labelMaxFileSize="حداکثر حجم مجاز: {filesize}"
                 allowImagePreview={true}
-                imagePreviewMaxHeight={150}
+                imagePreviewMaxHeight={100}
                 allowImageValidateSize={true}
                 imageValidateSizeMinWidth={10}
                 imageValidateSizeMaxWidth={300}
@@ -667,13 +646,13 @@ const categoriesSetDetailsHandler = () => {
                 allowMultiple={false}
                 maxFiles={1}
                 checkValidity={true}
-                allowFilePoster={true}
+                // allowFilePoster={false}
                 allowFileSizeValidation={true}
                 maxFileSize='1MB'
                 labelMaxFileSizeExceeded="حجم فایل زیاد است"
                 labelMaxFileSize="حداکثر حجم مجاز: {filesize}"
                 allowImagePreview={true}
-                imagePreviewMaxHeight={150}
+                imagePreviewMaxHeight={100}
                 allowImageValidateSize={true}
                 imageValidateSizeMinWidth={10}
                 imageValidateSizeMaxWidth={300}
@@ -731,7 +710,7 @@ const categoriesSetDetailsHandler = () => {
                 allowMultiple={false}
                 maxFiles={1}
                 checkValidity={true}
-                allowFilePoster={true}
+                // allowFilePoster={false}
                 allowFileSizeValidation={true}
                 maxFileSize='1MB'
                 labelMaxFileSizeExceeded="حجم فایل زیاد است"
@@ -1029,8 +1008,9 @@ const categoriesSetDetailsHandler = () => {
               loadingText="درحال بارگیری"
               noOptionsText="موردی یافت نشد"
               options={infoBoxTags.map((option) => option.name)}
-              value={infoBoxTrimedValues}
-              // defaultValue={infoBoxTrimedValues}
+              getOptionSelected={(option) => option.title}
+              getOptionLabel={(option) => option.title}
+              defaultValue={infoBoxTrimedValues}
               disabled={loadingInfoBoxTags}
               freeSolo
               onChange={(event, values) => {
