@@ -74,7 +74,6 @@ import 'filepond-plugin-file-poster/dist/filepond-plugin-file-poster.css';
 
 import classes from './categoriesInfoModal.module.css'
 import './categoryAddModal.css'
-import './categoryInfoModal.css'
 
 registerPlugin(
   FilePondPluginImageExifOrientation,
@@ -674,7 +673,6 @@ const categoriesSetDetailsHandler = () => {
                 labelMaxFileSizeExceeded="حجم فایل زیاد است"
                 labelMaxFileSize="حداکثر حجم مجاز: {filesize}"
                 allowImagePreview={true}
-                imagePreviewMinHeight={150}
                 imagePreviewMaxHeight={300}
                 allowImageValidateSize={true}
                 imageValidateSizeMinWidth={75}

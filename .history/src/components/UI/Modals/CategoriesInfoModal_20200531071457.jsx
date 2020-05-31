@@ -74,7 +74,6 @@ import 'filepond-plugin-file-poster/dist/filepond-plugin-file-poster.css';
 
 import classes from './categoriesInfoModal.module.css'
 import './categoryAddModal.css'
-import './categoryInfoModal.css'
 
 registerPlugin(
   FilePondPluginImageExifOrientation,
