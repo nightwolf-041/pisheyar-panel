@@ -232,10 +232,10 @@ function CategoriesInfoModal(props) {
   
   const [info, setInfo] = React.useState(null);
 
-  const [documentGuidForCover, setDocumentGuidForCover] = React.useState('');
-  const [documentGuidForActiveIcon, setDocumentGuidForActiveIcon] = React.useState('');
-  const [documentGuidForInActive, setDocumentGuidForInActive] = React.useState('');
-  const [documentGuidForQuadMenu, setDocumentGuidForQuadMenu] = React.useState('');
+  const [documentGuidForCover, setDocumentGuidForCover] = React.useState(null);
+  const [documentGuidForActiveIcon, setDocumentGuidForActiveIcon] = React.useState(null);
+  const [documentGuidForInActive, setDocumentGuidForInActive] = React.useState(null);
+  const [documentGuidForQuadMenu, setDocumentGuidForQuadMenu] = React.useState(null);
   const [fileForCover, setFileForCover] = React.useState([]);
   const [fileForActiveIcon, setFileForActiveIcon] = React.useState([]);
   const [fileForInActive, setFileForInActive] = React.useState([]);
