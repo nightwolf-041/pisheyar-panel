@@ -464,7 +464,7 @@ const categoriesSetDetailsHandler = () => {
     }
   }
   setInfoBoxReplacedValues(replacedTrimedValues)
-  console.log(replacedTrimedValues);
+  console.log(infoBoxReplacedValues);
 
   axiosConfig.post('/Category/SetDetails', {
     categoryGuid: info.categoryGuid,

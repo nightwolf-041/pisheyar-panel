@@ -464,27 +464,27 @@ const categoriesSetDetailsHandler = () => {
     }
   }
   setInfoBoxReplacedValues(replacedTrimedValues)
-  console.log(replacedTrimedValues);
+  console.log(infoBoxReplacedValues);
 
-  axiosConfig.post('/Category/SetDetails', {
-    categoryGuid: info.categoryGuid,
-    abstract: infoBoxAbstract,
-    description: infoBoxDescription,
-    coverDocumentGuid: documentGuidForCover.replace(/['"]+/g, ''),
-    activeIconDocumentGuid: documentGuidForActiveIcon.replace(/['"]+/g, ''),
-    inactiveIconDocumentGuid: documentGuidForInActive.replace(/['"]+/g, ''),
-    quadMenuDocumentGuid: documentGuidForQuadMenu.replace(/['"]+/g, ''),
-    tags: replacedTrimedValues
-  }, {
-    headers: { Authorization: "Bearer " + props.token }
-  }).then(res => {
-    console.log(res);
-    setCategoriesSetDetailsLoading(false)
-    props.hideInfoModal()
-    toast('عملیات موفقیت آمیز بود', {type: toast.TYPE.SUCCESS});
-  }).catch(err => {
-    toast('خطای شبکه', {type: toast.TYPE.ERROR});
-  })
+  // axiosConfig.post('/Category/SetDetails', {
+  //   categoryGuid: info.categoryGuid,
+  //   abstract: infoBoxAbstract,
+  //   description: infoBoxDescription,
+  //   coverDocumentGuid: documentGuidForCover.replace(/['"]+/g, ''),
+  //   activeIconDocumentGuid: documentGuidForActiveIcon.replace(/['"]+/g, ''),
+  //   inactiveIconDocumentGuid: documentGuidForInActive.replace(/['"]+/g, ''),
+  //   quadMenuDocumentGuid: documentGuidForQuadMenu.replace(/['"]+/g, ''),
+  //   tags: infoBoxReplacedValues
+  // }, {
+  //   headers: { Authorization: "Bearer " + props.token }
+  // }).then(res => {
+  //   console.log(res);
+  //   setCategoriesSetDetailsLoading(false)
+  //   props.hideInfoModal()
+  //   toast('عملیات موفقیت آمیز بود', {type: toast.TYPE.SUCCESS});
+  // }).catch(err => {
+  //   toast('خطای شبکه', {type: toast.TYPE.ERROR});
+  // })
 }
 
   return (

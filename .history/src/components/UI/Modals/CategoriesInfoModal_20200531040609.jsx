@@ -220,12 +220,6 @@ const styles = makeStyles(theme => ({
 }));
 
 function CategoriesInfoModal(props) {
-
-  const [counter, setCounter] = React.useState(0);
-
-  const doSomething = () => {
-    setCounter(123);
-  }
   
   const [info, setInfo] = React.useState(null);
 
@@ -261,19 +255,20 @@ function CategoriesInfoModal(props) {
   let pond4 = React.useRef()
 
   React.useEffect(() => {
-    // doSomething()
 
-    if(props.infoData) {
+    if(props.infoData !== null && props.infoData !== undefined && props.infoData !== [] && props.infoData !== {}) {
       let modalInfo = {...props.infoData.node}
       let guid = modalInfo.categoryGuid
       axiosConfig.get('/Category/' + guid, {
         headers: { Authorization: "Bearer " + props.token }
 
       }).then(res => {
+        console.log(res.data);
         
         if(res.data.state === 1) {
-          setInfo({...res.data.category})
+          setInfo(res.data.category)
           let data = {...res.data.category}
+          console.log(data);
 
           setInfoBoxAbstract(data.abstract)
           setDefaultInfoBoxAbstract('donee')
@@ -299,6 +294,7 @@ function CategoriesInfoModal(props) {
                 }
             }
           ]
+          console.log(defaultImage);
           setFileForCover(defaultImage)
 
           let docObj2 = {...data.activeIconDocument}
@@ -350,15 +346,15 @@ function CategoriesInfoModal(props) {
                 }
             }
           ]
+          console.log(docObj4);
+          console.log(docObj4Options);
+          console.log(docObj4File);
+          console.log(defaultImage4);
           setFileForQuadMenu(defaultImage4)
-
-          props.reloadCategories()
+    // }
         }
         if(res.data.state === 2) {
           setDefaultInfoloading(false)
-          if(props.showInfoModal === true) {
-            toast('اطلاعات یافت نشد', {type: toast.TYPE.WARNING});
-          }
           // toast(res.data.message, {type: toast.TYPE.WARNING});
         }
 
@@ -371,6 +367,7 @@ function CategoriesInfoModal(props) {
     axiosConfig.get('/Tag/GetAll', {
       headers: { Authorization: "Bearer " + props.token }
     }).then(res => {
+      console.log(res.data);
       setloadingInfoBoxTags(false)
       setInfoBoxTags(res.data.tags)
     }).catch(err => {
@@ -378,7 +375,7 @@ function CategoriesInfoModal(props) {
       setloadingInfoBoxTags(false)
       setInfoBoxTags([])
     })
-  }, [counter, props.showInfoModal])
+  }, [props.infoData])
 
 
   const autoCompleteChangeHandler = (event, values) => {
@@ -386,7 +383,13 @@ function CategoriesInfoModal(props) {
     const newValues = SpacesRemovedArr.map(str => str.replace(/^\s+|\s+$|\s+(?=\s)/g, ""))
     .reduce(function(a,b){if(a.indexOf(b)<0)a.push(b);return a;},[])
 
+    console.log(values);
+    console.log(newValues);
+    // setInfoBoxTrimedValues(newValues, () => {
       setInfoBoxTrimedValues(newValues)
+
+    // })
+
   }
 
   const infoBoxAbstractInputHandler = e => {
@@ -464,17 +467,16 @@ const categoriesSetDetailsHandler = () => {
     }
   }
   setInfoBoxReplacedValues(replacedTrimedValues)
-  console.log(replacedTrimedValues);
 
   axiosConfig.post('/Category/SetDetails', {
-    categoryGuid: info.categoryGuid,
+    categoryGuid: info.node.categoryGuid,
     abstract: infoBoxAbstract,
     description: infoBoxDescription,
     coverDocumentGuid: documentGuidForCover.replace(/['"]+/g, ''),
     activeIconDocumentGuid: documentGuidForActiveIcon.replace(/['"]+/g, ''),
     inactiveIconDocumentGuid: documentGuidForInActive.replace(/['"]+/g, ''),
     quadMenuDocumentGuid: documentGuidForQuadMenu.replace(/['"]+/g, ''),
-    tags: replacedTrimedValues
+    tags: infoBoxReplacedValues
   }, {
     headers: { Authorization: "Bearer " + props.token }
   }).then(res => {
@@ -486,6 +488,8 @@ const categoriesSetDetailsHandler = () => {
     toast('خطای شبکه', {type: toast.TYPE.ERROR});
   })
 }
+
+console.log(infoBoxAbstract);
 
   return (
     <>
@@ -1057,7 +1061,7 @@ const categoriesSetDetailsHandler = () => {
                     variant="contained"
                     color="primary"
                     className={classes.buttonSuccess}
-                    disabled={categoriesSetDetailsLoading}
+                    disabled={props.categoriesSetDetailsLoading}
                     onClick={() => categoriesSetDetailsHandler()}
                     >
                     ارسال

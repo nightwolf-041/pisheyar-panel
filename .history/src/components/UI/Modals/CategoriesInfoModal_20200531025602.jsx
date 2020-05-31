@@ -220,12 +220,6 @@ const styles = makeStyles(theme => ({
 }));
 
 function CategoriesInfoModal(props) {
-
-  const [counter, setCounter] = React.useState(0);
-
-  const doSomething = () => {
-    setCounter(123);
-  }
   
   const [info, setInfo] = React.useState(null);
 
@@ -239,7 +233,6 @@ function CategoriesInfoModal(props) {
   const [fileForQuadMenu, setFileForQuadMenu] = React.useState([]);
   
   const [infoBoxAbstract, setInfoBoxAbstract] = React.useState('');
-  const [defaultInfoBoxAbstract, setDefaultInfoBoxAbstract] = React.useState(null);
   const [infoBoxDescription, setInfoBoxDescription] = React.useState('');
 
   const [loadingInfoBoxTags, setloadingInfoBoxTags] = React.useState(true);
@@ -247,9 +240,9 @@ function CategoriesInfoModal(props) {
   const [infoBoxTrimedValues, setInfoBoxTrimedValues] = React.useState();
   const [infoBoxReplacedValues, setInfoBoxReplacedValues] = React.useState();
 
-  const [defaultInfoloading, setDefaultInfoloading] = React.useState(true);
+  const [defaultInfoloading, setDefaultInfoloading] = React.useState(false);
   const [post, setPost] = React.useState({});
-  const [fakeAutoOptions, setFakeAutoOptions] = React.useState(['fake']);
+  const [fakeAutoOptions, setFakeAutoOptions] = React.useState(['']);
 
   const [categoriesSetDetailsLoading, setCategoriesSetDetailsLoading] = React.useState(false);
 
@@ -261,116 +254,107 @@ function CategoriesInfoModal(props) {
   let pond4 = React.useRef()
 
   React.useEffect(() => {
-    // doSomething()
+    console.log(props.infoData);
+    setInfo(props.infoData.node)
 
-    if(props.infoData) {
-      let modalInfo = {...props.infoData.node}
-      let guid = modalInfo.categoryGuid
-      axiosConfig.get('/Category/' + guid, {
-        headers: { Authorization: "Bearer " + props.token }
+    let data = props.infoData.node
+    console.log(data);
 
-      }).then(res => {
-        
-        if(res.data.state === 1) {
-          setInfo({...res.data.category})
-          let data = {...res.data.category}
+    // let docObj = {...data.coverDocument}
+    // let docObjOptions = {...docObj.options}
+    // let docObjFile = {...docObjOptions.files}
+    // let defaultImage = [
+    //   {
+    //       source: docObj.source,
+    //       options: {
+    //           type: 'local',
+    //           file: docObjFile,
+    //           metadata: {
+    //             poster: docObj.source
+    //           }
+    //       }
+    //   }
+    // ]
+    // setFileForCover()
 
-          setInfoBoxAbstract(data.abstract)
-          setDefaultInfoBoxAbstract('donee')
-          setDefaultInfoloading(false)
-          setInfoBoxDescription(data.description)
+    // // let data = props.infoData
+    // let docObj2 = {...data.activeIconDocument}
+    // let docObj2Options = {...docObj2.options}
+    // let docObj2File = {...docObj2Options.files}
+    // let defaultImage2 = [
+    //   {
+    //       source: docObj2.source,
+    //       options: {
+    //           type: 'local',
+    //           file: docObj2File,
+    //           metadata: {
+    //             poster: docObj2.source
+    //           }
+    //       }
+    //   }
+    // ]
+    // setFileForActiveIcon()
 
-          let defTags = [...data.tags]
-          let dafaultTrimed = [...defTags.map(def => def.name)]
-          setInfoBoxTrimedValues(dafaultTrimed)
+    // // let data = props.infoData
+    // let docObj3 = {...data.inactiveIconDocument}
+    // let docObj3Options = {...docObj3.options}
+    // let docObj3File = {...docObj3Options.files}
+    // let defaultImage3 = [
+    //   {
+    //       source: docObj3.source,
+    //       options: {
+    //           type: 'local',
+    //           file: docObj3File,
+    //           metadata: {
+    //             poster: docObj3.source
+    //           }
+    //       }
+    //   }
+    // ]
+    // setFileForInActive()
 
-          let docObj = {...data.coverDocument}
-          let docObjOptions = {...docObj.options}
-          let docObjFile = {...docObjOptions.files}
-          let defaultImage = [
-            {
-                source: docObj.source,
-                options: {
-                    type: 'local',
-                    file: docObjFile,
-                    metadata: {
-                      poster: docObj.source
-                    }
-                }
-            }
-          ]
-          setFileForCover(defaultImage)
-
-          let docObj2 = {...data.activeIconDocument}
-          let docObj2Options = {...docObj2.options}
-          let docObj2File = {...docObj2Options.files}
-          let defaultImage2 = [
-            {
-                source: docObj2.source,
-                options: {
-                    type: 'local',
-                    file: docObj2File,
-                    metadata: {
-                      poster: docObj2.source
-                    }
-                }
-            }
-          ]
-          setFileForActiveIcon(defaultImage2)
-
-          let docObj3 = {...data.inactiveIconDocument}
-          let docObj3Options = {...docObj3.options}
-          let docObj3File = {...docObj3Options.files}
-          let defaultImage3 = [
-            {
-                source: docObj3.source,
-                options: {
-                    type: 'local',
-                    file: docObj3File,
-                    metadata: {
-                      poster: docObj3.source
-                    }
-                }
-            }
-          ]
-          setFileForInActive(defaultImage3)
-
-          let docObj4 = {...data.quadMenuDocument}
-          let docObj4Options = {...docObj4.options}
-          let docObj4File = {...docObj4Options.files}
-          let defaultImage4 = [
-            {
-                source: docObj4.source,
-                options: {
-                    type: 'local',
-                    file: docObj4File,
-                    metadata: {
-                      poster: docObj4.source
-                    }
-                }
-            }
-          ]
-          setFileForQuadMenu(defaultImage4)
-
-          props.reloadCategories()
-        }
-        if(res.data.state === 2) {
-          setDefaultInfoloading(false)
-          if(props.showInfoModal === true) {
-            toast('اطلاعات یافت نشد', {type: toast.TYPE.WARNING});
-          }
-          // toast(res.data.message, {type: toast.TYPE.WARNING});
-        }
-
-      }).catch(err => {
-        setDefaultInfoloading(false)
-      })
-
+    // // let data = props.infoData
+    if(props.infoData !== null && props.infoData !== undefined && props.infoData !== [] || props.infoData !== {}) {
+      console.log(info);
+      setTimeout(() => {
+        console.log(info.categoryGuid);
+      }, 300)
     }
+    // let docObj4 = {...data.quadMenuDocument}
+    // let docObj4Options = {...docObj4.options}
+    // let docObj4File = {...docObj4Options.files}
+    // let defaultImage4 = [
+    //   {
+    //       source: docObj4.source,
+    //       options: {
+    //           type: 'local',
+    //           file: docObj4File,
+    //           metadata: {
+    //             poster: docObj4.source
+    //           }
+    //       }
+    //   }
+    // ]
+    // console.log(docObj4);
+    // console.log(docObj4Options);
+    // console.log(docObj4File);
+    // console.log(defaultImage4);
+    // setFileForQuadMenu()
+
+    // activeIconDocument
+    // inactiveIconDocument
+    // coverDocument
+    // quadMenuDocument
+
+// setFileForCover
+// setFileForActiveIcon
+// setFileForInActive
+// setFileForQuadMenu
 
     axiosConfig.get('/Tag/GetAll', {
       headers: { Authorization: "Bearer " + props.token }
     }).then(res => {
+      console.log(res.data);
       setloadingInfoBoxTags(false)
       setInfoBoxTags(res.data.tags)
     }).catch(err => {
@@ -378,7 +362,7 @@ function CategoriesInfoModal(props) {
       setloadingInfoBoxTags(false)
       setInfoBoxTags([])
     })
-  }, [counter, props.showInfoModal])
+  }, [props])
 
 
   const autoCompleteChangeHandler = (event, values) => {
@@ -386,7 +370,13 @@ function CategoriesInfoModal(props) {
     const newValues = SpacesRemovedArr.map(str => str.replace(/^\s+|\s+$|\s+(?=\s)/g, ""))
     .reduce(function(a,b){if(a.indexOf(b)<0)a.push(b);return a;},[])
 
+    console.log(values);
+    console.log(newValues);
+    // setInfoBoxTrimedValues(newValues, () => {
       setInfoBoxTrimedValues(newValues)
+
+    // })
+
   }
 
   const infoBoxAbstractInputHandler = e => {
@@ -464,17 +454,16 @@ const categoriesSetDetailsHandler = () => {
     }
   }
   setInfoBoxReplacedValues(replacedTrimedValues)
-  console.log(replacedTrimedValues);
 
   axiosConfig.post('/Category/SetDetails', {
-    categoryGuid: info.categoryGuid,
+    categoryGuid: info.node.categoryGuid,
     abstract: infoBoxAbstract,
     description: infoBoxDescription,
     coverDocumentGuid: documentGuidForCover.replace(/['"]+/g, ''),
     activeIconDocumentGuid: documentGuidForActiveIcon.replace(/['"]+/g, ''),
     inactiveIconDocumentGuid: documentGuidForInActive.replace(/['"]+/g, ''),
     quadMenuDocumentGuid: documentGuidForQuadMenu.replace(/['"]+/g, ''),
-    tags: replacedTrimedValues
+    tags: infoBoxReplacedValues
   }, {
     headers: { Authorization: "Bearer " + props.token }
   }).then(res => {
@@ -486,6 +475,7 @@ const categoriesSetDetailsHandler = () => {
     toast('خطای شبکه', {type: toast.TYPE.ERROR});
   })
 }
+
 
   return (
     <>
@@ -767,20 +757,20 @@ const categoriesSetDetailsHandler = () => {
 
               <Divider id="transition-modal-divider" className={classes.marginBottom}/>
 
-              {defaultInfoBoxAbstract !== null ?
+              {!defaultInfoloading ?
                 <TextField
                 label="توضیح مختصر"
                 className={[classes.inputs, "inputsDir", classes.titleMarginTop].join(' ')}
                 id="InfoBoxAbstract"
                 // size="small"
-                defaultValue={infoBoxAbstract}
+                defaultValue={post.postTitle}
                 variant="outlined"
                 onChange={(e) => infoBoxAbstractInputHandler(e)}
                 />
               : 
               <Autocomplete
                 options={fakeAutoOptions}
-                id="InfoBoxAbstract-desable"
+                id="postTitle-desable"
                 disabled
                 style={{ direction: 'rtl' }}
                 className={classes.marginTop}
@@ -789,7 +779,6 @@ const categoriesSetDetailsHandler = () => {
               }
 
               <CKEditor
-                data={infoBoxDescription}
                 editor={ClassicEditor}
                 config={
               
@@ -1008,10 +997,6 @@ const categoriesSetDetailsHandler = () => {
               loadingText="درحال بارگیری"
               noOptionsText="موردی یافت نشد"
               options={infoBoxTags.map((option) => option.name)}
-              getOptionSelected={(option) => option.title}
-              getOptionLabel={(option) => option.title}
-              defaultValue={infoBoxTrimedValues}
-              disabled={loadingInfoBoxTags}
               freeSolo
               onChange={(event, values) => {
                 autoCompleteChangeHandler(event, values)
@@ -1057,7 +1042,7 @@ const categoriesSetDetailsHandler = () => {
                     variant="contained"
                     color="primary"
                     className={classes.buttonSuccess}
-                    disabled={categoriesSetDetailsLoading}
+                    disabled={props.categoriesSetDetailsLoading}
                     onClick={() => categoriesSetDetailsHandler()}
                     >
                     ارسال

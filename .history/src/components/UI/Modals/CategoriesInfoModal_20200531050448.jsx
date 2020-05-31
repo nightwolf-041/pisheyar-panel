@@ -464,7 +464,7 @@ const categoriesSetDetailsHandler = () => {
     }
   }
   setInfoBoxReplacedValues(replacedTrimedValues)
-  console.log(replacedTrimedValues);
+  console.log(infoBoxReplacedValues);
 
   axiosConfig.post('/Category/SetDetails', {
     categoryGuid: info.categoryGuid,
@@ -474,7 +474,7 @@ const categoriesSetDetailsHandler = () => {
     activeIconDocumentGuid: documentGuidForActiveIcon.replace(/['"]+/g, ''),
     inactiveIconDocumentGuid: documentGuidForInActive.replace(/['"]+/g, ''),
     quadMenuDocumentGuid: documentGuidForQuadMenu.replace(/['"]+/g, ''),
-    tags: replacedTrimedValues
+    tags: infoBoxReplacedValues
   }, {
     headers: { Authorization: "Bearer " + props.token }
   }).then(res => {

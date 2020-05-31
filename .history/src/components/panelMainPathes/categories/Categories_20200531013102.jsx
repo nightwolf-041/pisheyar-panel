@@ -239,38 +239,6 @@ class Categories extends React.Component {
     })
   }
 
-  reloadCategories = () => {
-    let guid = this.props.categoryGuid
-    axiosConfig.get('/Category/' + guid, {
-      headers: { Authorization: "Bearer " + this.props.token }
-    }).then(res => {
-      console.log(res.data);
-      
-      if(res.data.state === 1) {
-        this.setState({
-          treeData: res.data.category.children,
-          loading: false
-        })
-      }
-      if(res.data.state === 2) {
-        toast(res.data.message, {type: toast.TYPE.WARNING});
-        this.setState({
-          errorMsg: res.data.message,
-          emptyMessage: res.data.message,
-          loading: false
-        })
-      }
-
-    }).catch(err => {
-
-      this.errorOnCatch()
-      this.setState({
-        loading: false,
-        errorOnLoadData: true
-      })
-    })
-  }
-
 
   createNodeHandler = (nodeName, nodeOrder) => {
 
@@ -538,7 +506,6 @@ class Categories extends React.Component {
             buttonLoading={this.state.InfobuttonLoading}
             errorOnInfo={this.state.errorOnInfo}
             infoData={this.state.infoModalData}
-            reloadCategories={this.reloadCategories}
             // handleButtonClick={(nodeName, nodeOrder) => this.createNodeHandler(nodeName, nodeOrder)}
             />
 
