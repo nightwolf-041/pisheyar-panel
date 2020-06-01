@@ -226,7 +226,6 @@ class Categories extends React.Component {
     })
   }
   closeInfoModal = () => {
-    console.log('closed');
     this.setState({
       openInfoModal: false,
       errorOnInfo: false

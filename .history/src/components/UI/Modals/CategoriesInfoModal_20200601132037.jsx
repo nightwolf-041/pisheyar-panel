@@ -309,7 +309,7 @@ function CategoriesInfoModal(props) {
   React.useEffect(() => {
     // doSomething()
 
-    if(props.showInfoModal) {
+    if(props.infoData) {
       let modalInfo = {...props.infoData.node}
       let guid = modalInfo.categoryGuid
 
@@ -564,9 +564,9 @@ const categoriesSetDetailsHandler = () => {
     // setDocumentGuidForQuadMenu('')
     setCategoriesSetDetailsLoading(false)
     props.hideInfoModal()
-    props.reloadCategories()
     if(res.data.state === 1) {
       toast('عملیات موفقیت آمیز بود', {type: toast.TYPE.SUCCESS});
+      props.reloadCategories()
     }else{
       toast(res.data.message, {type: toast.TYPE.ERROR});
     }

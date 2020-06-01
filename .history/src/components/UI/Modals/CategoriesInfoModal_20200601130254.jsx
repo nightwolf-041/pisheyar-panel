@@ -128,9 +128,8 @@ const styles = makeStyles(theme => ({
   },
   modalHidden: {
     position: 'none',
-    top: 0,
+    top: '10%',
     left: 0,
-    height: '100vh',
     display: 'none',
     alignItems: 'center',
     justifyContent: 'center',
@@ -138,7 +137,6 @@ const styles = makeStyles(theme => ({
     zIndex: -50,
   },
   paper: {
-    position: 'relative',
     backgroundColor: theme.palette.background.paper,
     border: '1px solid #000',
     boxShadow: 'none',
@@ -151,11 +149,9 @@ const styles = makeStyles(theme => ({
     overflowX: 'hidden'
   },
   closeIocn: {
-    position: 'absolute',
-    top: '1rem',
-    right: '1rem',
-    color: 'red',
-    cursor: 'pointer'
+    textAlign: 'left',
+    marginTop: '10px',
+    marginLeft: '15px'
   },
   title: {
     textAlign: 'left',
@@ -309,7 +305,7 @@ function CategoriesInfoModal(props) {
   React.useEffect(() => {
     // doSomething()
 
-    if(props.showInfoModal) {
+    if(props.infoData) {
       let modalInfo = {...props.infoData.node}
       let guid = modalInfo.categoryGuid
 
@@ -335,52 +331,48 @@ function CategoriesInfoModal(props) {
           let dafaultTrimed = [...defTags.map(def => def.name)]
           setInfoBoxTrimedValues(dafaultTrimed)
 
+          if(data.coverDocument !== null) {
             let docObj = {...data.coverDocument}
             let docObjOptions = {...docObj.options}
             let docObjFile = {...docObjOptions.files}
-            if(docObj.source !== null) {
-              let defaultImage = [
-                {
-                    source: docObj.source,
-                    options: {
-                        type: 'local',
-                        file: docObjFile,
-                        metadata: {
-                          poster: docObj.source
-                        }
-                    }
-                }
-              ]
-              setFileForCover(defaultImage)
-            }else {
-              setFileForCover(undefined)
-            }
+            let defaultImage = [
+              {
+                  source: docObj.source,
+                  options: {
+                      type: 'local',
+                      file: docObjFile,
+                      metadata: {
+                        poster: docObj.source
+                      }
+                  }
+              }
+            ]
+            setFileForCover(defaultImage)
+          }
 
+          if(data.activeIconDocument !== null) {
             let docObj2 = {...data.activeIconDocument}
             let docObj2Options = {...docObj2.options}
             let docObj2File = {...docObj2Options.files}
-            if(docObj2.source !== null) {
-              let defaultImage2 = [
-                {
-                    source: docObj2.source,
-                    options: {
-                        type: 'local',
-                        file: docObj2File,
-                        metadata: {
-                          poster: docObj2.source
-                        }
-                    }
-                }
-              ]
-              setFileForActiveIcon(defaultImage2)
-            }else {
-              setFileForActiveIcon(undefined)
-            }
+            let defaultImage2 = [
+              {
+                  source: docObj2.source,
+                  options: {
+                      type: 'local',
+                      file: docObj2File,
+                      metadata: {
+                        poster: docObj2.source
+                      }
+                  }
+              }
+            ]
+            setFileForActiveIcon(defaultImage2)
+          }
 
+          if(data.inactiveIconDocument !== null) {
             let docObj3 = {...data.inactiveIconDocument}
             let docObj3Options = {...docObj3.options}
             let docObj3File = {...docObj3Options.files}
-            if(docObj3.source !== null) {
             let defaultImage3 = [
               {
                   source: docObj3.source,
@@ -394,30 +386,26 @@ function CategoriesInfoModal(props) {
               }
             ]
             setFileForInActive(defaultImage3)
-          }else {
-            setFileForInActive(undefined)
           }
 
+          if(data.quadMenuDocument !== null) {
             let docObj4 = {...data.quadMenuDocument}
             let docObj4Options = {...docObj4.options}
             let docObj4File = {...docObj4Options.files}
-            if(docObj4.source !== null) {
-              let defaultImage4 = [
-                {
-                    source: docObj4.source,
-                    options: {
-                        type: 'local',
-                        file: docObj4File,
-                        metadata: {
-                          poster: docObj4.source
-                        }
-                    }
-                }
-              ]
-              setFileForQuadMenu(defaultImage4)
-            }else {
-              setFileForQuadMenu(undefined)
-            }
+            let defaultImage4 = [
+              {
+                  source: docObj4.source,
+                  options: {
+                      type: 'local',
+                      file: docObj4File,
+                      metadata: {
+                        poster: docObj4.source
+                      }
+                  }
+              }
+            ]
+            setFileForQuadMenu(defaultImage4)
+          }
 
           // props.reloadCategories()
         }
@@ -564,9 +552,9 @@ const categoriesSetDetailsHandler = () => {
     // setDocumentGuidForQuadMenu('')
     setCategoriesSetDetailsLoading(false)
     props.hideInfoModal()
-    props.reloadCategories()
     if(res.data.state === 1) {
       toast('عملیات موفقیت آمیز بود', {type: toast.TYPE.SUCCESS});
+      props.reloadCategories()
     }else{
       toast(res.data.message, {type: toast.TYPE.ERROR});
     }
@@ -636,8 +624,8 @@ console.log(documentGuidForInActive);
               </div>
 
               <FilePond ref={ref => pond = ref}
-                files={fileForCover}
-                // {...ckFileProp}
+                // files={fileForCover !== null ? fileForCover : undefined}
+                {...ckFileProp}
                 allowMultiple={false}
                 maxFiles={1}
                 checkValidity={true}
@@ -701,8 +689,8 @@ console.log(documentGuidForInActive);
               </div>
 
               <FilePond ref={ref => pond2 = ref}
-                files={fileForActiveIcon}
-                // {...ckFileProp2}
+                // files={fileForActiveIcon}
+                {...ckFileProp2}
                 allowMultiple={false}
                 maxFiles={1}
                 checkValidity={true}
@@ -766,8 +754,8 @@ console.log(documentGuidForInActive);
               </div>
 
               <FilePond ref={ref => pond3 = ref}
-                files={fileForInActive}
-                // {...ckFileProp3}
+                // files={fileForInActive}
+                {...ckFileProp3}
                 allowMultiple={false}
                 maxFiles={1}
                 checkValidity={true}
@@ -832,8 +820,8 @@ console.log(documentGuidForInActive);
               </div>
 
               <FilePond ref={ref => pond4 = ref}
-                files={fileForQuadMenu}
-                // {...ckFileProp4}
+                // files={fileForQuadMenu}
+                {...ckFileProp4}
                 allowMultiple={false}
                 maxFiles={1}
                 checkValidity={true}
