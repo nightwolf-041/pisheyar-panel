@@ -325,6 +325,7 @@ function CategoriesInfoModal(props) {
 
           setInfoBoxAbstract(data.abstract)
           setDefaultInfoBoxAbstract('donee')
+          setDefaultInfoloading(false)
 
           if(data.description !== null){
             setInfoBoxDescription(data.description)
@@ -334,7 +335,6 @@ function CategoriesInfoModal(props) {
           let dafaultTrimed = [...defTags.map(def => def.name)]
           setInfoBoxTrimedValues(dafaultTrimed)
           console.log(dafaultTrimed);
-          setDefaultInfoloading(false)
 
             let docObj = {...data.coverDocument}
             let docObjOptions = {...docObj.options}
